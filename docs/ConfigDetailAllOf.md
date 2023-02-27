@@ -1,0 +1,15 @@
+# ConfigDetailAllOf
+
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**config_type** | [**EntityRef**](EntityRef.md) |  | 
+**config_type_id** | **str** |  | 
+**data** | **bool, date, datetime, dict, float, int, list, str, none_type** | The data section of a config is based on the schema of its type | 
+**name** | **str** |  | 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

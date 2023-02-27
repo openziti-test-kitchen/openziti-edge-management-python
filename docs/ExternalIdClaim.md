@@ -1,0 +1,17 @@
+# ExternalIdClaim
+
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**index** | **int, none_type** |  | 
+**location** | **str, none_type** |  | 
+**matcher** | **str, none_type** |  | 
+**matcher_criteria** | **str, none_type** |  | 
+**parser** | **str, none_type** |  | 
+**parser_criteria** | **str, none_type** |  | 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
