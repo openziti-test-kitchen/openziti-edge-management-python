@@ -17,15 +17,15 @@ Allows an admin to enable/disable data flow tracing for an identity
 ### Example
 
 * Api Key Authentication (ztSession):
-
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import tracing_api
-from openziti_edge_management.model.trace_detail_envelope import TraceDetailEnvelope
-from openziti_edge_management.model.trace_spec import TraceSpec
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.trace_detail_envelope import TraceDetailEnvelope
+from openziti_edge_management.models.trace_spec import TraceSpec
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -38,7 +38,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -46,23 +46,16 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tracing_api.TracingApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    trace_spec = TraceSpec(
-        channels=[
-            "channels_example",
-        ],
-        duration="duration_example",
-        enabled=True,
-        trace_id="trace_id_example",
-    ) # TraceSpec | A traceSpec object
+    api_instance = openziti_edge_management.TracingApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    trace_spec = openziti_edge_management.TraceSpec() # TraceSpec | A traceSpec object
 
-    # example passing only required values which don't have defaults set
     try:
         # Enable/disable data flow tracing for an identity
         api_response = api_instance.update_identity_tracing(id, trace_spec)
+        print("The response of TracingApi->update_identity_tracing:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling TracingApi->update_identity_tracing: %s\n" % e)
 ```
 
@@ -71,8 +64,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **trace_spec** | [**TraceSpec**](TraceSpec.md)| A traceSpec object |
+ **id** | **str**| The id of the requested resource | 
+ **trace_spec** | [**TraceSpec**](TraceSpec.md)| A traceSpec object | 
 
 ### Return type
 
@@ -87,9 +80,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns the document that represents the trace state |  -  |

@@ -21,15 +21,16 @@ Creates a new OTT, OTTCA, or UPDB enrollment for a specific identity. If an enro
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enrollment_api
-from openziti_edge_management.model.create_envelope import CreateEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.enrollment_create import EnrollmentCreate
+from openziti_edge_management.models.create_envelope import CreateEnvelope
+from openziti_edge_management.models.enrollment_create import EnrollmentCreate
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -42,29 +43,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enrollment_api.EnrollmentApi(api_client)
-    enrollment = EnrollmentCreate(
-        ca_id="ca_id_example",
-        expires_at=dateutil_parser('1970-01-01T00:00:00.00Z'),
-        identity_id="identity_id_example",
-        method="ott",
-        username="username_example",
-    ) # EnrollmentCreate | An enrollment to create
+    api_instance = openziti_edge_management.EnrollmentApi(api_client)
+    enrollment = openziti_edge_management.EnrollmentCreate() # EnrollmentCreate | An enrollment to create
 
-    # example passing only required values which don't have defaults set
     try:
         # Create an outstanding enrollment for an identity
         api_response = api_instance.create_enrollment(enrollment)
+        print("The response of EnrollmentApi->create_enrollment:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollmentApi->create_enrollment: %s\n" % e)
 ```
 
@@ -73,7 +70,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enrollment** | [**EnrollmentCreate**](EnrollmentCreate.md)| An enrollment to create |
+ **enrollment** | [**EnrollmentCreate**](EnrollmentCreate.md)| An enrollment to create | 
 
 ### Return type
 
@@ -81,16 +78,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -110,14 +105,15 @@ Delete an outstanding enrollment by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enrollment_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -130,23 +126,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enrollment_api.EnrollmentApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.EnrollmentApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Delete an outstanding enrollment
         api_response = api_instance.delete_enrollment(id)
+        print("The response of EnrollmentApi->delete_enrollment:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollmentApi->delete_enrollment: %s\n" % e)
 ```
 
@@ -155,7 +153,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -163,16 +161,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -191,14 +187,15 @@ Retrieves a single outstanding enrollment by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enrollment_api
-from openziti_edge_management.model.detail_enrollment_envelope import DetailEnrollmentEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.detail_enrollment_envelope import DetailEnrollmentEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -211,23 +208,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enrollment_api.EnrollmentApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.EnrollmentApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Retrieves an outstanding enrollment
         api_response = api_instance.detail_enrollment(id)
+        print("The response of EnrollmentApi->detail_enrollment:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollmentApi->detail_enrollment: %s\n" % e)
 ```
 
@@ -236,7 +235,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -244,16 +243,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular enrollment resource |  -  |
@@ -263,7 +260,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_enrollments**
-> ListEnrollmentsEnvelope list_enrollments()
+> ListEnrollmentsEnvelope list_enrollments(limit=limit, offset=offset, filter=filter)
 
 List outstanding enrollments
 
@@ -272,14 +269,15 @@ Retrieves a list of outstanding enrollments; supports filtering, sorting, and pa
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enrollment_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.list_enrollments_envelope import ListEnrollmentsEnvelope
+from openziti_edge_management.models.list_enrollments_envelope import ListEnrollmentsEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -292,26 +290,27 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enrollment_api.EnrollmentApi(api_client)
-    limit = 1 # int |  (optional)
-    offset = 1 # int |  (optional)
-    filter = "filter_example" # str |  (optional)
+    api_instance = openziti_edge_management.EnrollmentApi(api_client)
+    limit = 56 # int |  (optional)
+    offset = 56 # int |  (optional)
+    filter = 'filter_example' # str |  (optional)
 
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # List outstanding enrollments
         api_response = api_instance.list_enrollments(limit=limit, offset=offset, filter=filter)
+        print("The response of EnrollmentApi->list_enrollments:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollmentApi->list_enrollments: %s\n" % e)
 ```
 
@@ -320,9 +319,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional]
- **offset** | **int**|  | [optional]
- **filter** | **str**|  | [optional]
+ **limit** | **int**|  | [optional] 
+ **offset** | **int**|  | [optional] 
+ **filter** | **str**|  | [optional] 
 
 ### Return type
 
@@ -330,16 +329,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of enrollments |  -  |
@@ -358,15 +355,16 @@ For expired or unexpired enrollments, reset the expiration window. A new JWT wil
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enrollment_api
-from openziti_edge_management.model.create_envelope import CreateEnvelope
-from openziti_edge_management.model.enrollment_refresh import EnrollmentRefresh
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.create_envelope import CreateEnvelope
+from openziti_edge_management.models.enrollment_refresh import EnrollmentRefresh
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -379,26 +377,26 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enrollment_api.EnrollmentApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    refresh = EnrollmentRefresh(
-        expires_at=dateutil_parser('1970-01-01T00:00:00.00Z'),
-    ) # EnrollmentRefresh | An enrollment refresh request
+    api_instance = openziti_edge_management.EnrollmentApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    refresh = openziti_edge_management.EnrollmentRefresh() # EnrollmentRefresh | An enrollment refresh request
 
-    # example passing only required values which don't have defaults set
     try:
         # Refreshes an enrollment record's expiration window
         api_response = api_instance.refresh_enrollment(id, refresh)
+        print("The response of EnrollmentApi->refresh_enrollment:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollmentApi->refresh_enrollment: %s\n" % e)
 ```
 
@@ -407,8 +405,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **refresh** | [**EnrollmentRefresh**](EnrollmentRefresh.md)| An enrollment refresh request |
+ **id** | **str**| The id of the requested resource | 
+ **refresh** | [**EnrollmentRefresh**](EnrollmentRefresh.md)| An enrollment refresh request | 
 
 ### Return type
 
@@ -416,16 +414,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The create request was successful and the resource has been added at the following location |  -  |

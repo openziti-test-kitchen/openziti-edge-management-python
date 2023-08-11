@@ -24,15 +24,16 @@ Creates a Posture Checks
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.create_envelope import CreateEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.posture_check_create import PostureCheckCreate
+from openziti_edge_management.models.create_envelope import CreateEnvelope
+from openziti_edge_management.models.posture_check_create import PostureCheckCreate
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -45,23 +46,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    posture_check = PostureCheckCreate() # PostureCheckCreate | A Posture Check to create
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    posture_check = openziti_edge_management.PostureCheckCreate() # PostureCheckCreate | A Posture Check to create
 
-    # example passing only required values which don't have defaults set
     try:
         # Creates a Posture Checks
         api_response = api_instance.create_posture_check(posture_check)
+        print("The response of PostureChecksApi->create_posture_check:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->create_posture_check: %s\n" % e)
 ```
 
@@ -70,7 +73,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **posture_check** | [**PostureCheckCreate**](PostureCheckCreate.md)| A Posture Check to create |
+ **posture_check** | [**PostureCheckCreate**](PostureCheckCreate.md)| A Posture Check to create | 
 
 ### Return type
 
@@ -78,16 +81,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -106,14 +107,15 @@ Deletes and Posture Checks by id
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -126,23 +128,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Deletes an Posture Checks
         api_response = api_instance.delete_posture_check(id)
+        print("The response of PostureChecksApi->delete_posture_check:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->delete_posture_check: %s\n" % e)
 ```
 
@@ -151,7 +155,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -159,16 +163,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -187,14 +189,15 @@ Retrieves a single Posture Checks by id
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.detail_posture_check_envelope import DetailPostureCheckEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.detail_posture_check_envelope import DetailPostureCheckEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -207,23 +210,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single Posture Checks
         api_response = api_instance.detail_posture_check(id)
+        print("The response of PostureChecksApi->detail_posture_check:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->detail_posture_check: %s\n" % e)
 ```
 
@@ -232,7 +237,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -240,16 +245,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Retrieves a singular posture check by id |  -  |
@@ -268,14 +271,15 @@ Retrieves a single posture check type by id
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.detail_posture_check_type_envelope import DetailPostureCheckTypeEnvelope
+from openziti_edge_management.models.detail_posture_check_type_envelope import DetailPostureCheckTypeEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -288,23 +292,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single posture check type
         api_response = api_instance.detail_posture_check_type(id)
+        print("The response of PostureChecksApi->detail_posture_check_type:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->detail_posture_check_type: %s\n" % e)
 ```
 
@@ -313,7 +319,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -321,16 +327,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Retrieves a singular posture check type by id |  -  |
@@ -340,7 +344,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_posture_check_types**
-> ListPostureCheckTypesEnvelope list_posture_check_types()
+> ListPostureCheckTypesEnvelope list_posture_check_types(limit=limit, offset=offset, filter=filter)
 
 List a subset of posture check types
 
@@ -349,14 +353,15 @@ Retrieves a list of posture check types
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.list_posture_check_types_envelope import ListPostureCheckTypesEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.list_posture_check_types_envelope import ListPostureCheckTypesEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -369,26 +374,27 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    limit = 1 # int |  (optional)
-    offset = 1 # int |  (optional)
-    filter = "filter_example" # str |  (optional)
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    limit = 56 # int |  (optional)
+    offset = 56 # int |  (optional)
+    filter = 'filter_example' # str |  (optional)
 
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # List a subset of posture check types
         api_response = api_instance.list_posture_check_types(limit=limit, offset=offset, filter=filter)
+        print("The response of PostureChecksApi->list_posture_check_types:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->list_posture_check_types: %s\n" % e)
 ```
 
@@ -397,9 +403,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional]
- **offset** | **int**|  | [optional]
- **filter** | **str**|  | [optional]
+ **limit** | **int**|  | [optional] 
+ **offset** | **int**|  | [optional] 
+ **filter** | **str**|  | [optional] 
 
 ### Return type
 
@@ -407,16 +413,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json; charset=utf-8, application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of posture check types |  -  |
@@ -426,7 +430,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_posture_checks**
-> ListPostureCheckEnvelope list_posture_checks()
+> ListPostureCheckEnvelope list_posture_checks(limit=limit, offset=offset, filter=filter, role_filter=role_filter, role_semantic=role_semantic)
 
 List a subset of posture checks
 
@@ -435,14 +439,15 @@ Retrieves a list of posture checks
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.list_posture_check_envelope import ListPostureCheckEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.list_posture_check_envelope import ListPostureCheckEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -455,30 +460,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    limit = 1 # int |  (optional)
-    offset = 1 # int |  (optional)
-    filter = "filter_example" # str |  (optional)
-    role_filter = [
-        "roleFilter_example",
-    ] # [str] |  (optional)
-    role_semantic = "roleSemantic_example" # str |  (optional)
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    limit = 56 # int |  (optional)
+    offset = 56 # int |  (optional)
+    filter = 'filter_example' # str |  (optional)
+    role_filter = ['role_filter_example'] # List[str] |  (optional)
+    role_semantic = 'role_semantic_example' # str |  (optional)
 
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # List a subset of posture checks
         api_response = api_instance.list_posture_checks(limit=limit, offset=offset, filter=filter, role_filter=role_filter, role_semantic=role_semantic)
+        print("The response of PostureChecksApi->list_posture_checks:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->list_posture_checks: %s\n" % e)
 ```
 
@@ -487,11 +491,11 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional]
- **offset** | **int**|  | [optional]
- **filter** | **str**|  | [optional]
- **role_filter** | **[str]**|  | [optional]
- **role_semantic** | **str**|  | [optional]
+ **limit** | **int**|  | [optional] 
+ **offset** | **int**|  | [optional] 
+ **filter** | **str**|  | [optional] 
+ **role_filter** | [**List[str]**](str.md)|  | [optional] 
+ **role_semantic** | **str**|  | [optional] 
 
 ### Return type
 
@@ -499,16 +503,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json; charset=utf-8, application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of posture checks |  -  |
@@ -527,15 +529,16 @@ Update only the supplied fields on a Posture Checks by id
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
-from openziti_edge_management.model.posture_check_patch import PostureCheckPatch
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.models.posture_check_patch import PostureCheckPatch
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -548,24 +551,26 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    posture_check = PostureCheckPatch() # PostureCheckPatch | A Posture Check patch object
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    posture_check = openziti_edge_management.PostureCheckPatch() # PostureCheckPatch | A Posture Check patch object
 
-    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on a Posture Checks
         api_response = api_instance.patch_posture_check(id, posture_check)
+        print("The response of PostureChecksApi->patch_posture_check:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->patch_posture_check: %s\n" % e)
 ```
 
@@ -574,8 +579,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **posture_check** | [**PostureCheckPatch**](PostureCheckPatch.md)| A Posture Check patch object |
+ **id** | **str**| The id of the requested resource | 
+ **posture_check** | [**PostureCheckPatch**](PostureCheckPatch.md)| A Posture Check patch object | 
 
 ### Return type
 
@@ -583,16 +588,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -612,15 +615,16 @@ Update all fields on a Posture Checks by id
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import posture_checks_api
-from openziti_edge_management.model.posture_check_update import PostureCheckUpdate
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.models.posture_check_update import PostureCheckUpdate
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -633,24 +637,26 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = posture_checks_api.PostureChecksApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    posture_check = PostureCheckUpdate() # PostureCheckUpdate | A Posture Check update object
+    api_instance = openziti_edge_management.PostureChecksApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    posture_check = openziti_edge_management.PostureCheckUpdate() # PostureCheckUpdate | A Posture Check update object
 
-    # example passing only required values which don't have defaults set
     try:
         # Update all fields on a Posture Checks
         api_response = api_instance.update_posture_check(id, posture_check)
+        print("The response of PostureChecksApi->update_posture_check:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling PostureChecksApi->update_posture_check: %s\n" % e)
 ```
 
@@ -659,8 +665,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **posture_check** | [**PostureCheckUpdate**](PostureCheckUpdate.md)| A Posture Check update object |
+ **id** | **str**| The id of the requested resource | 
+ **posture_check** | [**PostureCheckUpdate**](PostureCheckUpdate.md)| A Posture Check update object | 
 
 ### Return type
 
@@ -668,16 +674,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |

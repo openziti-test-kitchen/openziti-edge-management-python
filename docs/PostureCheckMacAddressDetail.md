@@ -4,18 +4,25 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mac_addresses** | **[str]** |  | 
-**links** | [**Links**](Links.md) |  | 
-**created_at** | **datetime** |  | 
-**id** | **str** |  | 
-**name** | **str** |  | 
-**role_attributes** | [**Attributes**](Attributes.md) |  | 
-**tags** | [**Tags**](Tags.md) |  | 
-**type_id** | **str** |  | 
-**updated_at** | **datetime** |  | 
-**version** | **int** |  | 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+**mac_addresses** | **List[str]** |  | 
 
+## Example
+
+```python
+from openziti_edge_management.models.posture_check_mac_address_detail import PostureCheckMacAddressDetail
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of PostureCheckMacAddressDetail from a JSON string
+posture_check_mac_address_detail_instance = PostureCheckMacAddressDetail.from_json(json)
+# print the JSON string representation of the object
+print PostureCheckMacAddressDetail.to_json()
+
+# convert the object into a dict
+posture_check_mac_address_detail_dict = posture_check_mac_address_detail_instance.to_dict()
+# create an instance of PostureCheckMacAddressDetail from a dict
+posture_check_mac_address_detail_form_dict = posture_check_mac_address_detail.from_dict(posture_check_mac_address_detail_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

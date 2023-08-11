@@ -19,14 +19,14 @@ Deletes and API sesion by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
-
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import api_session_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -39,7 +39,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -47,15 +47,15 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = api_session_api.APISessionApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.APISessionApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Deletes an API Sessions
         api_response = api_instance.delete_api_sessions(id)
+        print("The response of APISessionApi->delete_api_sessions:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling APISessionApi->delete_api_sessions: %s\n" % e)
 ```
 
@@ -64,7 +64,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -79,9 +79,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -100,14 +98,14 @@ Retrieves a single API Session by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
-
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import api_session_api
-from openziti_edge_management.model.detail_api_session_envelope import DetailApiSessionEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.detail_api_session_envelope import DetailApiSessionEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -120,7 +118,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -128,15 +126,15 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = api_session_api.APISessionApi(api_client)
-    id = "id_example" # str | The id of the requested resource
+    api_instance = openziti_edge_management.APISessionApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
 
-    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single API Session
         api_response = api_instance.detail_api_sessions(id)
+        print("The response of APISessionApi->detail_api_sessions:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling APISessionApi->detail_api_sessions: %s\n" % e)
 ```
 
@@ -145,7 +143,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
+ **id** | **str**| The id of the requested resource | 
 
 ### Return type
 
@@ -160,9 +158,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Retrieves a singular API Session by id |  -  |
@@ -172,7 +168,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_api_sessions**
-> ListApiSessionsEnvelope list_api_sessions()
+> ListApiSessionsEnvelope list_api_sessions(limit=limit, offset=offset, filter=filter)
 
 List active API sessions
 
@@ -181,14 +177,15 @@ Returns a list of active API sessions. The resources can be sorted, filtered, an
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import api_session_api
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.list_api_sessions_envelope import ListApiSessionsEnvelope
+from openziti_edge_management.models.list_api_sessions_envelope import ListApiSessionsEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -201,26 +198,27 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = api_session_api.APISessionApi(api_client)
-    limit = 1 # int |  (optional)
-    offset = 1 # int |  (optional)
-    filter = "filter_example" # str |  (optional)
+    api_instance = openziti_edge_management.APISessionApi(api_client)
+    limit = 56 # int |  (optional)
+    offset = 56 # int |  (optional)
+    filter = 'filter_example' # str |  (optional)
 
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # List active API sessions
         api_response = api_instance.list_api_sessions(limit=limit, offset=offset, filter=filter)
+        print("The response of APISessionApi->list_api_sessions:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling APISessionApi->list_api_sessions: %s\n" % e)
 ```
 
@@ -229,9 +227,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional]
- **offset** | **int**|  | [optional]
- **filter** | **str**|  | [optional]
+ **limit** | **int**|  | [optional] 
+ **offset** | **int**|  | [optional] 
+ **filter** | **str**|  | [optional] 
 
 ### Return type
 
@@ -239,16 +237,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json; charset=utf-8, application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of active API Sessions |  -  |

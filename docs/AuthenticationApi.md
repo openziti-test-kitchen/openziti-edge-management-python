@@ -9,23 +9,23 @@ Method | HTTP request | Description
 
 
 # **authenticate**
-> CurrentApiSessionDetailEnvelope authenticate(method)
+> CurrentApiSessionDetailEnvelope authenticate(method, auth=auth)
 
 Authenticate via a method supplied via a query string parameter
 
-Allows authentication  Methods include \"password\" and \"cert\" 
+Allowed authentication methods include \"password\", \"cert\", and \"ext-jwt\" 
 
 ### Example
 
-
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import authentication_api
-from openziti_edge_management.model.current_api_session_detail_envelope import CurrentApiSessionDetailEnvelope
-from openziti_edge_management.model.authenticate import Authenticate
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.authenticate import Authenticate
+from openziti_edge_management.models.current_api_session_detail_envelope import CurrentApiSessionDetailEnvelope
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -34,47 +34,18 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient() as api_client:
+with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = authentication_api.AuthenticationApi(api_client)
-    method = "password" # str | 
-    auth = Authenticate(
-        config_types=ConfigTypes([
-            "config_types_example",
-        ]),
-        env_info=EnvInfo(
-            arch="arch_example",
-            os="os_example",
-            os_release="os_release_example",
-            os_version="os_version_example",
-        ),
-        password=Password("password_example"),
-        sdk_info=SdkInfo(
-            app_id="app_id_example",
-            app_version="app_version_example",
-            branch="branch_example",
-            revision="revision_example",
-            type="type_example",
-            version="version_example",
-        ),
-        username=Username("username_example"),
-    ) # Authenticate |  (optional)
+    api_instance = openziti_edge_management.AuthenticationApi(api_client)
+    method = 'method_example' # str | 
+    auth = openziti_edge_management.Authenticate() # Authenticate |  (optional)
 
-    # example passing only required values which don't have defaults set
-    try:
-        # Authenticate via a method supplied via a query string parameter
-        api_response = api_instance.authenticate(method)
-        pprint(api_response)
-    except openziti_edge_management.ApiException as e:
-        print("Exception when calling AuthenticationApi->authenticate: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # Authenticate via a method supplied via a query string parameter
         api_response = api_instance.authenticate(method, auth=auth)
+        print("The response of AuthenticationApi->authenticate:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling AuthenticationApi->authenticate: %s\n" % e)
 ```
 
@@ -83,8 +54,8 @@ with openziti_edge_management.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **method** | **str**|  |
- **auth** | [**Authenticate**](Authenticate.md)|  | [optional]
+ **method** | **str**|  | 
+ **auth** | [**Authenticate**](Authenticate.md)|  | [optional] 
 
 ### Return type
 
@@ -99,14 +70,12 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json, default
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The API session associated with the session used to issue the request |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**403** | The authentication request could not be processed as the credentials are invalid |  -  |
+**401** | The authentication request could not be processed as the credentials are invalid |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -120,14 +89,16 @@ Completes MFA authentication by submitting a MFA time based one time token or ba
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import authentication_api
-from openziti_edge_management.model.mfa_code import MfaCode
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.models.mfa_code import MfaCode
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -140,25 +111,25 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = authentication_api.AuthenticationApi(api_client)
-    mfa_auth = MfaCode(
-        code="code_example",
-    ) # MfaCode | An MFA validation request
+    api_instance = openziti_edge_management.AuthenticationApi(api_client)
+    mfa_auth = openziti_edge_management.MfaCode() # MfaCode | An MFA validation request
 
-    # example passing only required values which don't have defaults set
     try:
         # Complete MFA authentication
         api_response = api_instance.authenticate_mfa(mfa_auth)
+        print("The response of AuthenticationApi->authenticate_mfa:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling AuthenticationApi->authenticate_mfa: %s\n" % e)
 ```
 
@@ -167,7 +138,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **mfa_auth** | [**MfaCode**](MfaCode.md)| An MFA validation request |
+ **mfa_auth** | [**MfaCode**](MfaCode.md)| An MFA validation request | 
 
 ### Return type
 
@@ -175,16 +146,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |

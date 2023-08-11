@@ -11,7 +11,7 @@ function _generate {
         --rm \
         --volume "${PWD}":/out:Z \
         docker.io/openapitools/openapi-generator-cli generate \
-        --generator-name python-prior \
+        --generator-name python \
         --git-host 'github.com' \
         --git-repo-id 'openziti-edge-management-python' \
         --git-user-id 'openziti-test-kitchen' \

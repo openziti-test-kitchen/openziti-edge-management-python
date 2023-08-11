@@ -11,8 +11,24 @@ Name | Type | Description | Notes
 **revision** | **str** |  | [optional] 
 **type** | **str** |  | [optional] 
 **version** | **str** |  | [optional] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
+## Example
+
+```python
+from openziti_edge_management.models.sdk_info import SdkInfo
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of SdkInfo from a JSON string
+sdk_info_instance = SdkInfo.from_json(json)
+# print the JSON string representation of the object
+print SdkInfo.to_json()
+
+# convert the object into a dict
+sdk_info_dict = sdk_info_instance.to_dict()
+# create an instance of SdkInfo from a dict
+sdk_info_form_dict = sdk_info.from_dict(sdk_info_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

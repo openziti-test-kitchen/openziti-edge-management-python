@@ -4,18 +4,25 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**domains** | **[str]** |  | 
-**links** | [**Links**](Links.md) |  | 
-**created_at** | **datetime** |  | 
-**id** | **str** |  | 
-**name** | **str** |  | 
-**role_attributes** | [**Attributes**](Attributes.md) |  | 
-**tags** | [**Tags**](Tags.md) |  | 
-**type_id** | **str** |  | 
-**updated_at** | **datetime** |  | 
-**version** | **int** |  | 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+**domains** | **List[str]** |  | 
 
+## Example
+
+```python
+from openziti_edge_management.models.posture_check_domain_detail import PostureCheckDomainDetail
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of PostureCheckDomainDetail from a JSON string
+posture_check_domain_detail_instance = PostureCheckDomainDetail.from_json(json)
+# print the JSON string representation of the object
+print PostureCheckDomainDetail.to_json()
+
+# convert the object into a dict
+posture_check_domain_detail_dict = posture_check_domain_detail_instance.to_dict()
+# create an instance of PostureCheckDomainDetail from a dict
+posture_check_domain_detail_form_dict = posture_check_domain_detail.from_dict(posture_check_domain_detail_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

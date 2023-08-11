@@ -5,13 +5,29 @@ Fields shared by all Edge API entities
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Links**](Links.md) |  | 
+**links** | [**Dict[str, Link]**](Link.md) | A map of named links | 
 **created_at** | **datetime** |  | 
 **id** | **str** |  | 
-**updated_at** | **datetime** |  | 
 **tags** | [**Tags**](Tags.md) |  | [optional] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+**updated_at** | **datetime** |  | 
 
+## Example
+
+```python
+from openziti_edge_management.models.base_entity import BaseEntity
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of BaseEntity from a JSON string
+base_entity_instance = BaseEntity.from_json(json)
+# print the JSON string representation of the object
+print BaseEntity.to_json()
+
+# convert the object into a dict
+base_entity_dict = base_entity_instance.to_dict()
+# create an instance of BaseEntity from a dict
+base_entity_form_dict = base_entity.from_dict(base_entity_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

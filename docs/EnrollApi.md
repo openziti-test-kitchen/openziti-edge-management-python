@@ -18,15 +18,16 @@ This endpoint only functions for certificates issued by the controller. 3rd part
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enroll_api
-from openziti_edge_management.model.identity_extend_enrollment_request import IdentityExtendEnrollmentRequest
-from openziti_edge_management.model.identity_extend_enrollment_envelope import IdentityExtendEnrollmentEnvelope
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.models.identity_extend_enrollment_envelope import IdentityExtendEnrollmentEnvelope
+from openziti_edge_management.models.identity_extend_enrollment_request import IdentityExtendEnrollmentRequest
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -39,26 +40,26 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enroll_api.EnrollApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    extend = IdentityExtendEnrollmentRequest(
-        client_cert_csr="client_cert_csr_example",
-    ) # IdentityExtendEnrollmentRequest | 
+    api_instance = openziti_edge_management.EnrollApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    extend = openziti_edge_management.IdentityExtendEnrollmentRequest() # IdentityExtendEnrollmentRequest | 
 
-    # example passing only required values which don't have defaults set
     try:
         # Allows the current identity to recieve a new certificate associated with a certificate based authenticator
         api_response = api_instance.extend_current_identity_authenticator(id, extend)
+        print("The response of EnrollApi->extend_current_identity_authenticator:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollApi->extend_current_identity_authenticator: %s\n" % e)
 ```
 
@@ -67,8 +68,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **extend** | [**IdentityExtendEnrollmentRequest**](IdentityExtendEnrollmentRequest.md)|  |
+ **id** | **str**| The id of the requested resource | 
+ **extend** | [**IdentityExtendEnrollmentRequest**](IdentityExtendEnrollmentRequest.md)|  | 
 
 ### Return type
 
@@ -76,16 +77,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A response containg the identity&#39;s new certificate |  -  |
@@ -103,15 +102,16 @@ After submitting a CSR for a new client certificate the resulting public certifi
 ### Example
 
 * Api Key Authentication (ztSession):
-
+* OAuth Authentication (oauth2):
 ```python
 import time
+import os
 import openziti_edge_management
-from openziti_edge_management.api import enroll_api
-from openziti_edge_management.model.identity_extend_validate_enrollment_request import IdentityExtendValidateEnrollmentRequest
-from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
+from openziti_edge_management.models.empty import Empty
+from openziti_edge_management.models.identity_extend_validate_enrollment_request import IdentityExtendValidateEnrollmentRequest
+from openziti_edge_management.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -124,26 +124,26 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+configuration.api_key['ztSession'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = enroll_api.EnrollApi(api_client)
-    id = "id_example" # str | The id of the requested resource
-    extend = IdentityExtendValidateEnrollmentRequest(
-        client_cert="client_cert_example",
-    ) # IdentityExtendValidateEnrollmentRequest | 
+    api_instance = openziti_edge_management.EnrollApi(api_client)
+    id = 'id_example' # str | The id of the requested resource
+    extend = openziti_edge_management.IdentityExtendValidateEnrollmentRequest() # IdentityExtendValidateEnrollmentRequest | 
 
-    # example passing only required values which don't have defaults set
     try:
         # Allows the current identity to validate reciept of a new client certificate
         api_response = api_instance.extend_verify_current_identity_authenticator(id, extend)
+        print("The response of EnrollApi->extend_verify_current_identity_authenticator:\n")
         pprint(api_response)
-    except openziti_edge_management.ApiException as e:
+    except Exception as e:
         print("Exception when calling EnrollApi->extend_verify_current_identity_authenticator: %s\n" % e)
 ```
 
@@ -152,8 +152,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource |
- **extend** | [**IdentityExtendValidateEnrollmentRequest**](IdentityExtendValidateEnrollmentRequest.md)|  |
+ **id** | **str**| The id of the requested resource | 
+ **extend** | [**IdentityExtendValidateEnrollmentRequest**](IdentityExtendValidateEnrollmentRequest.md)|  | 
 
 ### Return type
 
@@ -161,16 +161,14 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |

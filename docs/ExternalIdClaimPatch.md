@@ -4,14 +4,30 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**index** | **int, none_type** |  | [optional] 
-**location** | **str, none_type** |  | [optional] 
-**matcher** | **str, none_type** |  | [optional] 
-**matcher_criteria** | **str, none_type** |  | [optional] 
-**parser** | **str, none_type** |  | [optional] 
-**parser_criteria** | **str, none_type** |  | [optional] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+**index** | **int** |  | [optional] 
+**location** | **str** |  | [optional] 
+**matcher** | **str** |  | [optional] 
+**matcher_criteria** | **str** |  | [optional] 
+**parser** | **str** |  | [optional] 
+**parser_criteria** | **str** |  | [optional] 
 
+## Example
+
+```python
+from openziti_edge_management.models.external_id_claim_patch import ExternalIdClaimPatch
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of ExternalIdClaimPatch from a JSON string
+external_id_claim_patch_instance = ExternalIdClaimPatch.from_json(json)
+# print the JSON string representation of the object
+print ExternalIdClaimPatch.to_json()
+
+# convert the object into a dict
+external_id_claim_patch_dict = external_id_claim_patch_instance.to_dict()
+# create an instance of ExternalIdClaimPatch from a dict
+external_id_claim_patch_form_dict = external_id_claim_patch.from_dict(external_id_claim_patch_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
