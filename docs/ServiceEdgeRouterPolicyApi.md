@@ -69,6 +69,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -149,6 +150,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ServiceEdgeRouterPolicyApi->delete_service_edge_router_policy: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -232,6 +234,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ServiceEdgeRouterPolicyApi->detail_service_edge_router_policy: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -318,6 +321,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -402,6 +406,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -482,6 +487,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ServiceEdgeRouterPolicyApi->list_service_edge_router_policy_services: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -568,6 +574,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -652,6 +659,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ServiceEdgeRouterPolicyApi->update_service_edge_router_policy: %s\n" % e)
 ```
+
 
 
 ### Parameters

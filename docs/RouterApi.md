@@ -73,6 +73,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -156,6 +157,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -236,6 +238,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling RouterApi->delete_router: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -321,6 +324,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -402,6 +406,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling RouterApi->detail_router: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -486,6 +491,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -568,6 +574,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling RouterApi->list_routers: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -656,6 +663,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -740,6 +748,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling RouterApi->patch_router: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -828,6 +837,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -914,6 +924,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -998,6 +1009,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling RouterApi->update_transit_router: %s\n" % e)
 ```
+
 
 
 ### Parameters

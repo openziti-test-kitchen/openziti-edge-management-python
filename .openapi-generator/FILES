@@ -577,5 +577,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_well_known_api.py
 tox.ini

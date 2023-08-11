@@ -66,6 +66,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -149,6 +150,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -229,6 +231,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling EnrollmentApi->detail_enrollment: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -315,6 +318,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -399,6 +403,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling EnrollmentApi->refresh_enrollment: %s\n" % e)
 ```
+
 
 
 ### Parameters

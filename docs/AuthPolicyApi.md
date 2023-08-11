@@ -64,6 +64,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -143,6 +144,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -220,6 +222,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthPolicyApi->detail_auth_policy: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -306,6 +309,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -389,6 +393,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -470,6 +475,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthPolicyApi->update_auth_policy: %s\n" % e)
 ```
+
 
 
 ### Parameters

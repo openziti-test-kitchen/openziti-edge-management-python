@@ -67,6 +67,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -143,6 +144,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CurrentAPISessionApi->detail_current_identity_authenticator: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -229,6 +231,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -313,6 +316,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -394,6 +398,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -472,6 +477,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CurrentAPISessionApi->list_current_identity_authenticators: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -560,6 +566,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -644,6 +651,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CurrentAPISessionApi->update_current_identity_authenticator: %s\n" % e)
 ```
+
 
 
 ### Parameters

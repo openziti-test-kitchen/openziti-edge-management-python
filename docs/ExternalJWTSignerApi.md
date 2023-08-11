@@ -67,6 +67,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -147,6 +148,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ExternalJWTSignerApi->delete_external_jwt_signer: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -231,6 +233,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -313,6 +316,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ExternalJWTSignerApi->list_external_jwt_signers: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -401,6 +405,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -485,6 +490,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ExternalJWTSignerApi->update_external_jwt_signer: %s\n" % e)
 ```
+
 
 
 ### Parameters

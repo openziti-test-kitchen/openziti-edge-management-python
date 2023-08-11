@@ -50,6 +50,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -132,6 +133,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthenticationApi->authenticate_mfa: %s\n" % e)
 ```
+
 
 
 ### Parameters

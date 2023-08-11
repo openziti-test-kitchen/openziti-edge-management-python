@@ -60,6 +60,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -137,6 +138,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling APISessionApi->detail_api_sessions: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -221,6 +223,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling APISessionApi->list_api_sessions: %s\n" % e)
 ```
+
 
 
 ### Parameters
