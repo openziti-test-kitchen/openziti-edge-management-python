@@ -64,7 +64,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -147,7 +146,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ExtendEnrollmentApi->extend_verify_current_identity_authenticator: %s\n" % e)
 ```
-
 
 
 ### Parameters

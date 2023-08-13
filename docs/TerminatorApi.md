@@ -67,7 +67,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -145,7 +144,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TerminatorApi->delete_terminator: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -229,7 +227,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TerminatorApi->detail_terminator: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -316,7 +313,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -400,7 +396,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -482,7 +477,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TerminatorApi->update_terminator: %s\n" % e)
 ```
-
 
 
 ### Parameters

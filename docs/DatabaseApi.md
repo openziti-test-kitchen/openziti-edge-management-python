@@ -63,7 +63,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -142,7 +141,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -218,7 +216,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -291,7 +288,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling DatabaseApi->fix_data_integrity: %s\n" % e)
 ```
-
 
 
 ### Parameters

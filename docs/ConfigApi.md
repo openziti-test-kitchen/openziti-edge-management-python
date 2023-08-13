@@ -74,7 +74,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -151,7 +150,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->create_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -236,7 +234,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -315,7 +312,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->delete_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -401,7 +397,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -479,7 +474,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->detail_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -564,7 +558,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->list_config_types: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -653,7 +646,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -733,7 +725,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->list_configs_for_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -818,7 +809,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -900,7 +890,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->patch_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -989,7 +978,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -1071,7 +1059,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ConfigApi->update_config_type: %s\n" % e)
 ```
-
 
 
 ### Parameters

@@ -66,7 +66,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -144,7 +143,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CertificateAuthorityApi->delete_ca: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -226,7 +224,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -303,7 +300,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CertificateAuthorityApi->get_ca_jwt: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -390,7 +386,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -472,7 +467,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CertificateAuthorityApi->patch_ca: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -558,7 +552,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -639,7 +632,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CertificateAuthorityApi->verify_ca: %s\n" % e)
 ```
-
 
 
 ### Parameters

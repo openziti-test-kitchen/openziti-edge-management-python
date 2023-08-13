@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 REPO="openziti/edge-api"
+CONTAINER_TAG="latest-release"
 
 function _generate {
     local tag="$1"
@@ -10,7 +11,7 @@ function _generate {
         --cap-add ALL \
         --rm \
         --volume "${PWD}":/out:Z \
-        docker.io/openapitools/openapi-generator-cli generate \
+        docker.io/openapitools/openapi-generator-cli:$CONTAINER_TAG generate \
         --generator-name python \
         --git-host 'github.com' \
         --git-repo-id 'openziti-edge-management-python' \

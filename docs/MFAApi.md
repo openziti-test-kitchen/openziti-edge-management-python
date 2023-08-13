@@ -70,7 +70,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -151,7 +150,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling MFAApi->create_mfa_recovery_codes: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -236,7 +234,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -318,7 +315,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -392,7 +388,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling MFAApi->detail_mfa_qr_code: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -473,7 +468,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling MFAApi->detail_mfa_recovery_codes: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -558,7 +552,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -633,7 +626,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling MFAApi->remove_identity_mfa: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -717,7 +709,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling MFAApi->verify_mfa: %s\n" % e)
 ```
-
 
 
 ### Parameters

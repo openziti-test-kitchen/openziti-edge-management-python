@@ -52,7 +52,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -119,7 +118,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -183,7 +181,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -244,7 +241,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling InformationalApi->list_specs: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -320,7 +316,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 This endpoint does not need any parameter.
 
@@ -380,7 +375,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling InformationalApi->list_version: %s\n" % e)
 ```
-
 
 
 ### Parameters

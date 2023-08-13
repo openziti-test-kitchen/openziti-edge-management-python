@@ -69,7 +69,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -150,7 +149,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PostureChecksApi->delete_posture_check: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -235,7 +233,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -316,7 +313,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PostureChecksApi->detail_posture_check_type: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -401,7 +397,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PostureChecksApi->list_posture_check_types: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -492,7 +487,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -581,7 +575,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -666,7 +659,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PostureChecksApi->update_posture_check: %s\n" % e)
 ```
-
 
 
 ### Parameters

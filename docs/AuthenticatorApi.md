@@ -64,7 +64,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -144,7 +143,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -222,7 +220,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthenticatorApi->detail_authenticator: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -309,7 +306,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -391,7 +387,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthenticatorApi->patch_authenticator: %s\n" % e)
 ```
-
 
 
 ### Parameters
@@ -477,7 +472,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 ```
 
 
-
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -558,7 +552,6 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthenticatorApi->update_authenticator: %s\n" % e)
 ```
-
 
 
 ### Parameters
