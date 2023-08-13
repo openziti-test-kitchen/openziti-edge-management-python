@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cost** | **int** |  | 
+**disabled** | **bool** |  | 
 **fingerprint** | **str** |  | 
 **is_online** | **bool** |  | 
 **is_verified** | **bool** |  | 

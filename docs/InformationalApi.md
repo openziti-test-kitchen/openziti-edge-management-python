@@ -21,14 +21,13 @@ Returns single spec resource embedded within the controller for consumption/docu
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_spec_envelope import DetailSpecEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.detail_spec_envelope import DetailSpecEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -37,17 +36,17 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = informational_api.InformationalApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Return a single spec resource
         api_response = api_instance.detail_spec(id)
-        print("The response of InformationalApi->detail_spec:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->detail_spec: %s\n" % e)
 ```
 
@@ -56,7 +55,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -71,7 +70,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single specification |  -  |
@@ -87,14 +88,13 @@ Return the body of the specification (i.e. Swagger, OpenAPI 2.0, 3.0, etc).
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_spec_body_envelope import DetailSpecBodyEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.detail_spec_body_envelope import DetailSpecBodyEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -103,17 +103,17 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = informational_api.InformationalApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Returns the spec's file
         api_response = api_instance.detail_spec_body(id)
-        print("The response of InformationalApi->detail_spec_body:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->detail_spec_body: %s\n" % e)
 ```
 
@@ -122,7 +122,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -137,7 +137,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: text/yaml, application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns the document that represents the specification |  -  |
@@ -151,14 +153,13 @@ Returns version information
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_version_envelope import ListVersionEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.list_version_envelope import ListVersionEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -167,16 +168,16 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
+    api_instance = informational_api.InformationalApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Returns version information
         api_response = api_instance.list_root()
-        print("The response of InformationalApi->list_root:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->list_root: %s\n" % e)
 ```
 
@@ -197,7 +198,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Version information for the controller |  -  |
@@ -213,14 +216,13 @@ Returns a list of spec files embedded within the controller for consumption/docu
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_specs_envelope import ListSpecsEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.list_specs_envelope import ListSpecsEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -229,16 +231,16 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
+    api_instance = informational_api.InformationalApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Returns a list of API specs
         api_response = api_instance.list_specs()
-        print("The response of InformationalApi->list_specs:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->list_specs: %s\n" % e)
 ```
 
@@ -259,7 +261,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of specifications |  -  |
@@ -276,14 +280,14 @@ This endpoint is usefull for UIs that wish to display UI elements with counts.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_summary_counts_envelope import ListSummaryCountsEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.list_summary_counts_envelope import ListSummaryCountsEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -296,7 +300,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -304,14 +308,14 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
+    api_instance = informational_api.InformationalApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Returns a list of accessible resource counts
         api_response = api_instance.list_summary()
-        print("The response of InformationalApi->list_summary:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->list_summary: %s\n" % e)
 ```
 
@@ -332,7 +336,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Entity counts scopped to the current identitie&#39;s access |  -  |
@@ -347,14 +353,13 @@ Returns version information
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_version_envelope import ListVersionEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.list_version_envelope import ListVersionEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -363,16 +368,16 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.InformationalApi(api_client)
+    api_instance = informational_api.InformationalApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Returns version information
         api_response = api_instance.list_version()
-        print("The response of InformationalApi->list_version:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling InformationalApi->list_version: %s\n" % e)
 ```
 
@@ -393,7 +398,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Version information for the controller |  -  |

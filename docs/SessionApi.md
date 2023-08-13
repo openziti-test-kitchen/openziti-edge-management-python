@@ -21,14 +21,14 @@ Delete a session by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import session_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -41,25 +41,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.SessionApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = session_api.SessionApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete a session
         api_response = api_instance.delete_session(id)
-        print("The response of SessionApi->delete_session:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling SessionApi->delete_session: %s\n" % e)
 ```
 
@@ -68,7 +72,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -83,7 +87,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -104,14 +110,14 @@ Retrieves a single session by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_session_management_envelope import DetailSessionManagementEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import session_api
+from openziti_edge_management.model.detail_session_management_envelope import DetailSessionManagementEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -124,25 +130,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.SessionApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = session_api.SessionApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single session
         api_response = api_instance.detail_session(id)
-        print("The response of SessionApi->detail_session:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling SessionApi->detail_session: %s\n" % e)
 ```
 
@@ -151,7 +161,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -166,7 +176,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single session |  -  |
@@ -186,14 +198,14 @@ Retrieves a single session's route path by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_session_route_path_envelope import DetailSessionRoutePathEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import session_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.detail_session_route_path_envelope import DetailSessionRoutePathEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -206,25 +218,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.SessionApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = session_api.SessionApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single session's router path
         api_response = api_instance.detail_session_route_path(id)
-        print("The response of SessionApi->detail_session_route_path:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling SessionApi->detail_session_route_path: %s\n" % e)
 ```
 
@@ -233,7 +249,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -248,7 +264,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single session&#39;s route path |  -  |
@@ -258,7 +276,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_sessions**
-> ListSessionsManagementEnvelope list_sessions(limit=limit, offset=offset, filter=filter)
+> ListSessionsManagementEnvelope list_sessions()
 
 List sessions
 
@@ -268,14 +286,14 @@ Retrieves a list of active sessions resources; supports filtering, sorting, and 
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_sessions_management_envelope import ListSessionsManagementEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import session_api
+from openziti_edge_management.model.list_sessions_management_envelope import ListSessionsManagementEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -288,27 +306,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.SessionApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = session_api.SessionApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List sessions
         api_response = api_instance.list_sessions(limit=limit, offset=offset, filter=filter)
-        print("The response of SessionApi->list_sessions:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling SessionApi->list_sessions: %s\n" % e)
 ```
 
@@ -317,9 +340,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -334,7 +357,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of sessions |  -  |

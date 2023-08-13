@@ -5,40 +5,24 @@ An API Session object
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Link]**](Link.md) | A map of named links | 
+**links** | [**Links**](Links.md) |  | 
 **created_at** | **datetime** |  | 
 **id** | **str** |  | 
-**tags** | [**Tags**](Tags.md) |  | [optional] 
 **updated_at** | **datetime** |  | 
-**auth_queries** | [**List[AuthQueryDetail]**](AuthQueryDetail.md) |  | 
+**auth_queries** | [**AuthQueryList**](AuthQueryList.md) |  | 
 **authenticator_id** | **str** |  | 
-**cached_last_activity_at** | **datetime** |  | [optional] 
-**config_types** | **List[str]** |  | 
+**config_types** | **[str]** |  | 
 **identity** | [**EntityRef**](EntityRef.md) |  | 
 **identity_id** | **str** |  | 
 **ip_address** | **str** |  | 
 **is_mfa_complete** | **bool** |  | 
 **is_mfa_required** | **bool** |  | 
-**last_activity_at** | **datetime** |  | [optional] 
 **token** | **str** |  | 
+**tags** | [**Tags**](Tags.md) |  | [optional] 
+**cached_last_activity_at** | **datetime** |  | [optional] 
+**last_activity_at** | **datetime** |  | [optional] 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
-## Example
-
-```python
-from openziti_edge_management.models.api_session_detail import ApiSessionDetail
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of ApiSessionDetail from a JSON string
-api_session_detail_instance = ApiSessionDetail.from_json(json)
-# print the JSON string representation of the object
-print ApiSessionDetail.to_json()
-
-# convert the object into a dict
-api_session_detail_dict = api_session_detail_instance.to_dict()
-# create an instance of ApiSessionDetail from a dict
-api_session_detail_form_dict = api_session_detail.from_dict(api_session_detail_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

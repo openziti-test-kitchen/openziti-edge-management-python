@@ -4,6 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**auth_policy** | [**EntityRef**](EntityRef.md) |  | 
 **auth_policy_id** | **str** |  | 
 **authenticators** | [**IdentityAuthenticators**](IdentityAuthenticators.md) |  | 
 **default_hosting_cost** | [**TerminatorCost**](TerminatorCost.md) |  | 

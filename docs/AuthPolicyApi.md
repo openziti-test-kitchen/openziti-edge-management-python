@@ -22,15 +22,15 @@ Creates an Auth Policy. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.auth_policy_create import AuthPolicyCreate
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.auth_policy_create import AuthPolicyCreate
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -43,7 +43,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -51,15 +51,43 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    auth_policy = openziti_edge_management.AuthPolicyCreate() # AuthPolicyCreate | An Auth Policy to create
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    auth_policy = AuthPolicyCreate(
+        name="name_example",
+        primary=AuthPolicyPrimary(
+            cert=AuthPolicyPrimaryCert(
+                allow_expired_certs=True,
+                allowed=True,
+            ),
+            ext_jwt=AuthPolicyPrimaryExtJwt(
+                allowed=True,
+                allowed_signers=[
+                    "allowed_signers_example",
+                ],
+            ),
+            updb=AuthPolicyPrimaryUpdb(
+                allowed=True,
+                lockout_duration_minutes=1,
+                max_attempts=1,
+                min_password_length=1,
+                require_mixed_case=True,
+                require_number_char=True,
+                require_special_char=True,
+            ),
+        ),
+        secondary=AuthPolicySecondary(
+            require_ext_jwt_signer="require_ext_jwt_signer_example",
+            require_totp=True,
+        ),
+        tags=Tags(None),
+    ) # AuthPolicyCreate | An Auth Policy to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Creates an Auth Policy
         api_response = api_instance.create_auth_policy(auth_policy)
-        print("The response of AuthPolicyApi->create_auth_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->create_auth_policy: %s\n" % e)
 ```
 
@@ -68,7 +96,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **auth_policy** | [**AuthPolicyCreate**](AuthPolicyCreate.md)| An Auth Policy to create | 
+ **auth_policy** | [**AuthPolicyCreate**](AuthPolicyCreate.md)| An Auth Policy to create |
 
 ### Return type
 
@@ -83,7 +111,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -102,14 +132,14 @@ Delete an Auth Policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -122,7 +152,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -130,15 +160,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete an Auth Policy
         api_response = api_instance.delete_auth_policy(id)
-        print("The response of AuthPolicyApi->delete_auth_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->delete_auth_policy: %s\n" % e)
 ```
 
@@ -147,7 +177,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -162,7 +192,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -181,14 +213,14 @@ Retrieves a single Auth Policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_auth_policy_envelope import DetailAuthPolicyEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.detail_auth_policy_envelope import DetailAuthPolicyEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -201,7 +233,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -209,15 +241,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single Auth Policy
         api_response = api_instance.detail_auth_policy(id)
-        print("The response of AuthPolicyApi->detail_auth_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->detail_auth_policy: %s\n" % e)
 ```
 
@@ -226,7 +258,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -241,7 +273,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular Auth Policy resource |  -  |
@@ -251,7 +285,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_auth_policies**
-> ListAuthPoliciesEnvelope list_auth_policies(limit=limit, offset=offset, filter=filter)
+> ListAuthPoliciesEnvelope list_auth_policies()
 
 List Auth Policies
 
@@ -261,14 +295,14 @@ Retrieves a list of Auth Policies
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_auth_policies_envelope import ListAuthPoliciesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.list_auth_policies_envelope import ListAuthPoliciesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -281,27 +315,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List Auth Policies
         api_response = api_instance.list_auth_policies(limit=limit, offset=offset, filter=filter)
-        print("The response of AuthPolicyApi->list_auth_policies:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->list_auth_policies: %s\n" % e)
 ```
 
@@ -310,9 +349,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -327,7 +366,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of Auth Policies |  -  |
@@ -346,15 +387,15 @@ Update only the supplied fields on an Auth Policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.auth_policy_patch import AuthPolicyPatch
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.auth_policy_patch import AuthPolicyPatch
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -367,7 +408,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -375,16 +416,44 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    auth_policy = openziti_edge_management.AuthPolicyPatch() # AuthPolicyPatch | An Auth Policy patch object
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    auth_policy = AuthPolicyPatch(
+        name="name_example",
+        primary=AuthPolicyPrimaryPatch(
+            cert=AuthPolicyPrimaryCertPatch(
+                allow_expired_certs=True,
+                allowed=True,
+            ),
+            ext_jwt=AuthPolicyPrimaryExtJwtPatch(
+                allowed=True,
+                allowed_signers=[
+                    "allowed_signers_example",
+                ],
+            ),
+            updb=AuthPolicyPrimaryUpdbPatch(
+                allowed=True,
+                lockout_duration_minutes=1,
+                max_attempts=1,
+                min_password_length=1,
+                require_mixed_case=True,
+                require_number_char=True,
+                require_special_char=True,
+            ),
+        ),
+        secondary=AuthPolicySecondaryPatch(
+            require_ext_jwt_signer="require_ext_jwt_signer_example",
+            require_totp=True,
+        ),
+        tags=Tags(None),
+    ) # AuthPolicyPatch | An Auth Policy patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on an Auth Policy
         api_response = api_instance.patch_auth_policy(id, auth_policy)
-        print("The response of AuthPolicyApi->patch_auth_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->patch_auth_policy: %s\n" % e)
 ```
 
@@ -393,8 +462,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **auth_policy** | [**AuthPolicyPatch**](AuthPolicyPatch.md)| An Auth Policy patch object | 
+ **id** | **str**| The id of the requested resource |
+ **auth_policy** | [**AuthPolicyPatch**](AuthPolicyPatch.md)| An Auth Policy patch object |
 
 ### Return type
 
@@ -409,7 +478,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -429,15 +500,15 @@ Update all fields on an Auth Policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.auth_policy_create import AuthPolicyCreate
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import auth_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.auth_policy_create import AuthPolicyCreate
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -450,7 +521,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -458,16 +529,44 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.AuthPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    auth_policy = openziti_edge_management.AuthPolicyCreate() # AuthPolicyCreate | An Auth Policy update object
+    api_instance = auth_policy_api.AuthPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    auth_policy = AuthPolicyCreate(
+        name="name_example",
+        primary=AuthPolicyPrimary(
+            cert=AuthPolicyPrimaryCert(
+                allow_expired_certs=True,
+                allowed=True,
+            ),
+            ext_jwt=AuthPolicyPrimaryExtJwt(
+                allowed=True,
+                allowed_signers=[
+                    "allowed_signers_example",
+                ],
+            ),
+            updb=AuthPolicyPrimaryUpdb(
+                allowed=True,
+                lockout_duration_minutes=1,
+                max_attempts=1,
+                min_password_length=1,
+                require_mixed_case=True,
+                require_number_char=True,
+                require_special_char=True,
+            ),
+        ),
+        secondary=AuthPolicySecondary(
+            require_ext_jwt_signer="require_ext_jwt_signer_example",
+            require_totp=True,
+        ),
+        tags=Tags(None),
+    ) # AuthPolicyCreate | An Auth Policy update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on an Auth Policy
         api_response = api_instance.update_auth_policy(id, auth_policy)
-        print("The response of AuthPolicyApi->update_auth_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling AuthPolicyApi->update_auth_policy: %s\n" % e)
 ```
 
@@ -476,8 +575,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **auth_policy** | **AuthPolicyCreate**| An Auth Policy update object | 
+ **id** | **str**| The id of the requested resource |
+ **auth_policy** | [**AuthPolicyCreate**](AuthPolicyCreate.md)| An Auth Policy update object |
 
 ### Return type
 
@@ -492,7 +591,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |

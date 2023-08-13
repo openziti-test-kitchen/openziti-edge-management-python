@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 REPO="openziti/edge-api"
-CONTAINER_TAG="latest-release"
+CONTAINER_TAG="v6.6.0"
 
 function _generate {
     local tag="$1"
@@ -12,7 +12,7 @@ function _generate {
         --rm \
         --volume "${PWD}":/out:Z \
         docker.io/openapitools/openapi-generator-cli:$CONTAINER_TAG generate \
-        --generator-name python \
+        --generator-name python-prior \
         --git-host 'github.com' \
         --git-repo-id 'openziti-edge-management-python' \
         --git-user-id 'openziti-test-kitchen' \
@@ -37,7 +37,11 @@ function _test_tag_exists {
         jq -r '.[].name' <<< "$tags"
         exit 1
     fi
-    }
+}
+
+function local_modify {
+    echo "tags" >> .gitignore
+}
 
 function _usage {
     echo "usage: ./generate_client.sh v0.24.83" >&2
@@ -57,6 +61,8 @@ function _main {
         _test_tag_exists "$tag"
     fi
     _generate "$tag"
+
+    local_modify
 }
 
 _main "$@"

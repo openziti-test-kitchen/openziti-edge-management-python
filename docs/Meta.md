@@ -6,26 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **api_enrollment_version** | **str** |  | [optional] 
 **api_version** | **str** |  | [optional] 
-**filterable_fields** | **List[str]** |  | [optional] 
+**filterable_fields** | **[str]** |  | [optional] 
 **pagination** | [**Pagination**](Pagination.md) |  | [optional] 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
-## Example
-
-```python
-from openziti_edge_management.models.meta import Meta
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Meta from a JSON string
-meta_instance = Meta.from_json(json)
-# print the JSON string representation of the object
-print Meta.to_json()
-
-# convert the object into a dict
-meta_dict = meta_instance.to_dict()
-# create an instance of Meta from a dict
-meta_form_dict = meta.from_dict(meta_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

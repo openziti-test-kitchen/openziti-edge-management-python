@@ -16,13 +16,12 @@ This endpoint is used during enrollments to bootstrap trust between enrolling cl
 
 ### Example
 
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import well_known_api
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -31,16 +30,16 @@ configuration = openziti_edge_management.Configuration(
 
 
 # Enter a context with an instance of the API client
-with openziti_edge_management.ApiClient(configuration) as api_client:
+with openziti_edge_management.ApiClient() as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.WellKnownApi(api_client)
+    api_instance = well_known_api.WellKnownApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Get CA Cert Store
         api_response = api_instance.list_well_known_cas()
-        print("The response of WellKnownApi->list_well_known_cas:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling WellKnownApi->list_well_known_cas: %s\n" % e)
 ```
 
@@ -61,7 +60,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/pkcs7-mime
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A base64 encoded PKCS7 store |  -  |

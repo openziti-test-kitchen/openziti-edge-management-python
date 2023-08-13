@@ -25,15 +25,15 @@ Create a service policy resource. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.models.service_policy_create import ServicePolicyCreate
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.service_policy_create import ServicePolicyCreate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -46,7 +46,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -54,15 +54,29 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    policy = openziti_edge_management.ServicePolicyCreate() # ServicePolicyCreate | A service policy to create
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    policy = ServicePolicyCreate(
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        posture_check_roles=Roles([
+            "posture_check_roles_example",
+        ]),
+        semantic=Semantic("AllOf"),
+        service_roles=Roles([
+            "service_roles_example",
+        ]),
+        tags=Tags(None),
+        type=DialBind("Dial"),
+    ) # ServicePolicyCreate | A service policy to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Create a service policy resource
         api_response = api_instance.create_service_policy(policy)
-        print("The response of ServicePolicyApi->create_service_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->create_service_policy: %s\n" % e)
 ```
 
@@ -71,7 +85,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **policy** | [**ServicePolicyCreate**](ServicePolicyCreate.md)| A service policy to create | 
+ **policy** | [**ServicePolicyCreate**](ServicePolicyCreate.md)| A service policy to create |
 
 ### Return type
 
@@ -86,7 +100,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -105,14 +121,14 @@ Delete a service policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -125,7 +141,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -133,15 +149,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete a service policy
         api_response = api_instance.delete_service_policy(id)
-        print("The response of ServicePolicyApi->delete_service_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->delete_service_policy: %s\n" % e)
 ```
 
@@ -150,7 +166,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -165,7 +181,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -185,14 +203,14 @@ Retrieves a single service policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_service_policy_envelop import DetailServicePolicyEnvelop
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.detail_service_policy_envelop import DetailServicePolicyEnvelop
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -205,7 +223,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -213,15 +231,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single service policy
         api_response = api_instance.detail_service_policy(id)
-        print("The response of ServicePolicyApi->detail_service_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->detail_service_policy: %s\n" % e)
 ```
 
@@ -230,7 +248,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -245,7 +263,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single service policy |  -  |
@@ -255,7 +275,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_service_policies**
-> ListServicePoliciesEnvelope list_service_policies(limit=limit, offset=offset, filter=filter)
+> ListServicePoliciesEnvelope list_service_policies()
 
 List service policies
 
@@ -264,14 +284,14 @@ Retrieves a list of service policy resources; supports filtering, sorting, and p
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_service_policies_envelope import ListServicePoliciesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.list_service_policies_envelope import ListServicePoliciesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -284,7 +304,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -292,17 +312,18 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List service policies
         api_response = api_instance.list_service_policies(limit=limit, offset=offset, filter=filter)
-        print("The response of ServicePolicyApi->list_service_policies:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->list_service_policies: %s\n" % e)
 ```
 
@@ -311,9 +332,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -328,7 +349,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of service policies |  -  |
@@ -338,7 +361,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_service_policy_identities**
-> ListIdentitiesEnvelope list_service_policy_identities(id, limit=limit, offset=offset, filter=filter)
+> ListIdentitiesEnvelope list_service_policy_identities(id)
 
 List identities a service policy affects
 
@@ -347,14 +370,14 @@ Retrieves a list of identity resources that are affected by a service policy; su
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_identities_envelope import ListIdentitiesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.list_identities_envelope import ListIdentitiesEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -367,7 +390,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -375,18 +398,27 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    try:
+        # List identities a service policy affects
+        api_response = api_instance.list_service_policy_identities(id)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling ServicePolicyApi->list_service_policy_identities: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List identities a service policy affects
         api_response = api_instance.list_service_policy_identities(id, limit=limit, offset=offset, filter=filter)
-        print("The response of ServicePolicyApi->list_service_policy_identities:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->list_service_policy_identities: %s\n" % e)
 ```
 
@@ -395,10 +427,10 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **id** | **str**| The id of the requested resource |
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -413,7 +445,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of identities |  -  |
@@ -423,7 +457,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_service_policy_posture_checks**
-> ListPostureCheckEnvelope list_service_policy_posture_checks(id, limit=limit, offset=offset, filter=filter)
+> ListPostureCheckEnvelope list_service_policy_posture_checks(id)
 
 List posture check a service policy includes
 
@@ -432,14 +466,14 @@ Retrieves a list of posture check resources that are affected by a service polic
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_posture_check_envelope import ListPostureCheckEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.list_posture_check_envelope import ListPostureCheckEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -452,7 +486,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -460,18 +494,27 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    try:
+        # List posture check a service policy includes
+        api_response = api_instance.list_service_policy_posture_checks(id)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling ServicePolicyApi->list_service_policy_posture_checks: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List posture check a service policy includes
         api_response = api_instance.list_service_policy_posture_checks(id, limit=limit, offset=offset, filter=filter)
-        print("The response of ServicePolicyApi->list_service_policy_posture_checks:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->list_service_policy_posture_checks: %s\n" % e)
 ```
 
@@ -480,10 +523,10 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **id** | **str**| The id of the requested resource |
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -498,7 +541,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of posture checks |  -  |
@@ -508,7 +553,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_service_policy_services**
-> ListServicesEnvelope list_service_policy_services(id, limit=limit, offset=offset, filter=filter)
+> ListServicesEnvelope list_service_policy_services(id)
 
 List services a service policy affects
 
@@ -517,14 +562,14 @@ Retrieves a list of service resources that are affected by a service policy; sup
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_services_envelope import ListServicesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.list_services_envelope import ListServicesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -537,7 +582,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -545,18 +590,27 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    try:
+        # List services a service policy affects
+        api_response = api_instance.list_service_policy_services(id)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling ServicePolicyApi->list_service_policy_services: %s\n" % e)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List services a service policy affects
         api_response = api_instance.list_service_policy_services(id, limit=limit, offset=offset, filter=filter)
-        print("The response of ServicePolicyApi->list_service_policy_services:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->list_service_policy_services: %s\n" % e)
 ```
 
@@ -565,10 +619,10 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **id** | **str**| The id of the requested resource |
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -583,7 +637,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of services |  -  |
@@ -602,15 +658,15 @@ Update the supplied fields on a service policy. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.models.service_policy_patch import ServicePolicyPatch
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.service_policy_patch import ServicePolicyPatch
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -623,7 +679,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -631,16 +687,30 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    policy = openziti_edge_management.ServicePolicyPatch() # ServicePolicyPatch | A service policy patch object
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    policy = ServicePolicyPatch(
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        posture_check_roles=Roles([
+            "posture_check_roles_example",
+        ]),
+        semantic=Semantic("AllOf"),
+        service_roles=Roles([
+            "service_roles_example",
+        ]),
+        tags=Tags(None),
+        type=DialBind("Dial"),
+    ) # ServicePolicyPatch | A service policy patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on a service policy
         api_response = api_instance.patch_service_policy(id, policy)
-        print("The response of ServicePolicyApi->patch_service_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->patch_service_policy: %s\n" % e)
 ```
 
@@ -649,8 +719,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **policy** | [**ServicePolicyPatch**](ServicePolicyPatch.md)| A service policy patch object | 
+ **id** | **str**| The id of the requested resource |
+ **policy** | [**ServicePolicyPatch**](ServicePolicyPatch.md)| A service policy patch object |
 
 ### Return type
 
@@ -665,7 +735,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -685,15 +757,15 @@ Update all fields on a service policy by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.models.service_policy_update import ServicePolicyUpdate
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import service_policy_api
+from openziti_edge_management.model.service_policy_update import ServicePolicyUpdate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -706,7 +778,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -714,16 +786,30 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ServicePolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    policy = openziti_edge_management.ServicePolicyUpdate() # ServicePolicyUpdate | A service policy update object
+    api_instance = service_policy_api.ServicePolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    policy = ServicePolicyUpdate(
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        posture_check_roles=Roles([
+            "posture_check_roles_example",
+        ]),
+        semantic=Semantic("AllOf"),
+        service_roles=Roles([
+            "service_roles_example",
+        ]),
+        tags=Tags(None),
+        type=DialBind("Dial"),
+    ) # ServicePolicyUpdate | A service policy update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on a service policy
         api_response = api_instance.update_service_policy(id, policy)
-        print("The response of ServicePolicyApi->update_service_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ServicePolicyApi->update_service_policy: %s\n" % e)
 ```
 
@@ -732,8 +818,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **policy** | [**ServicePolicyUpdate**](ServicePolicyUpdate.md)| A service policy update object | 
+ **id** | **str**| The id of the requested resource |
+ **policy** | [**ServicePolicyUpdate**](ServicePolicyUpdate.md)| A service policy update object |
 
 ### Return type
 
@@ -748,7 +834,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |

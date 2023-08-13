@@ -9,24 +9,8 @@ Name | Type | Description | Notes
 **os** | **str** |  | 
 **revision** | **str** |  | 
 **version** | **str** |  | 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
-## Example
-
-```python
-from openziti_edge_management.models.version_info import VersionInfo
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of VersionInfo from a JSON string
-version_info_instance = VersionInfo.from_json(json)
-# print the JSON string representation of the object
-print VersionInfo.to_json()
-
-# convert the object into a dict
-version_info_dict = version_info_instance.to_dict()
-# create an instance of VersionInfo from a dict
-version_info_form_dict = version_info.from_dict(version_info_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

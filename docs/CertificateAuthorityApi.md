@@ -24,15 +24,15 @@ Creates a CA in an unverified state. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.ca_create import CaCreate
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.ca_create import CaCreate
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -45,7 +45,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -53,15 +53,49 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    ca = openziti_edge_management.CaCreate() # CaCreate | A CA to create
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    ca = CaCreate(
+        cert_pem='''-----BEGIN CERTIFICATE-----
+MIICUjCCAdmgAwIBAgIJANooo7NB+dZZMAoGCCqGSM49BAMCMF4xCzAJBgNVBAYT
+AlVTMQswCQYDVQQIDAJOQzETMBEGA1UECgwKTmV0Rm91bmRyeTEtMCsGA1UEAwwk
+TmV0Rm91bmRyeSBaaXRpIEV4dGVybmFsIEFQSSBSb290IENBMB4XDTE4MTExNTEy
+NTcwOVoXDTM4MTExMDEyNTcwOVowXjELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAk5D
+MRMwEQYDVQQKDApOZXRGb3VuZHJ5MS0wKwYDVQQDDCROZXRGb3VuZHJ5IFppdGkg
+RXh0ZXJuYWwgQVBJIFJvb3QgQ0EwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAARwq61Z
+Iaqbaw0PDt3frJZaHjkxfZhwYrykI1GlbRNd/jix03lVG9qvpN5Og9fQfFFcFmD/
+3vCE9S6O0npm0mADQxcBcxbMRAH5dtBuCuiJW6qAAbPgiM32vqSxBiFt0KejYzBh
+MB0GA1UdDgQWBBRx1OVGuc/jdltDc8YBtkw8Tbr4fjAfBgNVHSMEGDAWgBRx1OVG
+uc/jdltDc8YBtkw8Tbr4fjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIB
+hjAKBggqhkjOPQQDAgNnADBkAjBDRxNZUaIVpkQKnAgJukl3ysd3/i7Z6hDyIEms
+kllz/+ZvmdBp9iedV5o5BvJUggACMCv+UBFlJH7pmsOCo/F45Kk178YsCC7gaMxE
+1ZG1zveyMvsYsH04C9FndE6w2MLvlA==
+-----END CERTIFICATE-----
+''',
+        external_id_claim=ExternalIdClaim(
+            index=1,
+            location="COMMON_NAME",
+            matcher="ALL",
+            matcher_criteria="matcher_criteria_example",
+            parser="NONE",
+            parser_criteria="parser_criteria_example",
+        ),
+        identity_name_format="identity_name_format_example",
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        is_auth_enabled=True,
+        is_auto_ca_enrollment_enabled=True,
+        is_ott_ca_enrollment_enabled=True,
+        name="Test 3rd Party External CA",
+        tags=Tags(None),
+    ) # CaCreate | A CA to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Creates a CA
         api_response = api_instance.create_ca(ca)
-        print("The response of CertificateAuthorityApi->create_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->create_ca: %s\n" % e)
 ```
 
@@ -70,7 +104,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ca** | [**CaCreate**](CaCreate.md)| A CA to create | 
+ **ca** | [**CaCreate**](CaCreate.md)| A CA to create |
 
 ### Return type
 
@@ -85,7 +119,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -104,14 +140,14 @@ Delete a CA by id. Deleting a CA will delete its associated certificate authenti
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -124,7 +160,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -132,15 +168,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete a CA
         api_response = api_instance.delete_ca(id)
-        print("The response of CertificateAuthorityApi->delete_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->delete_ca: %s\n" % e)
 ```
 
@@ -149,7 +185,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -164,7 +200,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -183,14 +221,14 @@ Retrieves a single CA by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_ca_envelope import DetailCaEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.detail_ca_envelope import DetailCaEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -203,7 +241,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -211,15 +249,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single CA
         api_response = api_instance.detail_ca(id)
-        print("The response of CertificateAuthorityApi->detail_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->detail_ca: %s\n" % e)
 ```
 
@@ -228,7 +266,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -243,7 +281,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular Certificate Authority (CA) resource |  -  |
@@ -262,13 +302,13 @@ For CA auto enrollment, the enrollment JWT is static and provided on each CA res
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -281,7 +321,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -289,15 +329,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieve the enrollment JWT for a CA
         api_response = api_instance.get_ca_jwt(id)
-        print("The response of CertificateAuthorityApi->get_ca_jwt:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->get_ca_jwt: %s\n" % e)
 ```
 
@@ -306,7 +346,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -321,7 +361,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/jwt, application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The result is the JWT text to validate the CA |  -  |
@@ -331,7 +373,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_cas**
-> ListCasEnvelope list_cas(limit=limit, offset=offset, filter=filter)
+> ListCasEnvelope list_cas()
 
 List CAs
 
@@ -341,14 +383,14 @@ Retrieves a list of CA resources; supports filtering, sorting, and pagination. R
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_cas_envelope import ListCasEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.list_cas_envelope import ListCasEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -361,27 +403,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List CAs
         api_response = api_instance.list_cas(limit=limit, offset=offset, filter=filter)
-        print("The response of CertificateAuthorityApi->list_cas:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->list_cas: %s\n" % e)
 ```
 
@@ -390,9 +437,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -407,7 +454,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of Certificate Authorities (CAs) |  -  |
@@ -426,15 +475,15 @@ Update only the supplied fields on a CA by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.ca_patch import CaPatch
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.ca_patch import CaPatch
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -447,7 +496,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -455,16 +504,34 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    ca = openziti_edge_management.CaPatch() # CaPatch | A CA patch object
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    ca = CaPatch(
+        external_id_claim=ExternalIdClaimPatch(
+            index=1,
+            location="COMMON_NAME",
+            matcher="ALL",
+            matcher_criteria="matcher_criteria_example",
+            parser="NONE",
+            parser_criteria="parser_criteria_example",
+        ),
+        identity_name_format="identity_name_format_example",
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        is_auth_enabled=True,
+        is_auto_ca_enrollment_enabled=True,
+        is_ott_ca_enrollment_enabled=True,
+        name="My CA",
+        tags=Tags(None),
+    ) # CaPatch | A CA patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on a CA
         api_response = api_instance.patch_ca(id, ca)
-        print("The response of CertificateAuthorityApi->patch_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->patch_ca: %s\n" % e)
 ```
 
@@ -473,8 +540,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **ca** | [**CaPatch**](CaPatch.md)| A CA patch object | 
+ **id** | **str**| The id of the requested resource |
+ **ca** | [**CaPatch**](CaPatch.md)| A CA patch object |
 
 ### Return type
 
@@ -489,7 +556,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -509,15 +578,15 @@ Update all fields on a CA by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.ca_update import CaUpdate
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.ca_update import CaUpdate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -530,7 +599,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -538,16 +607,34 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    ca = openziti_edge_management.CaUpdate() # CaUpdate | A CA update object
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    ca = CaUpdate(
+        external_id_claim=ExternalIdClaim(
+            index=1,
+            location="COMMON_NAME",
+            matcher="ALL",
+            matcher_criteria="matcher_criteria_example",
+            parser="NONE",
+            parser_criteria="parser_criteria_example",
+        ),
+        identity_name_format="identity_name_format_example",
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        is_auth_enabled=True,
+        is_auto_ca_enrollment_enabled=True,
+        is_ott_ca_enrollment_enabled=True,
+        name="My CA",
+        tags=Tags(None),
+    ) # CaUpdate | A CA update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on a CA
         api_response = api_instance.update_ca(id, ca)
-        print("The response of CertificateAuthorityApi->update_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->update_ca: %s\n" % e)
 ```
 
@@ -556,8 +643,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **ca** | [**CaUpdate**](CaUpdate.md)| A CA update object | 
+ **id** | **str**| The id of the requested resource |
+ **ca** | [**CaUpdate**](CaUpdate.md)| A CA update object |
 
 ### Return type
 
@@ -572,7 +659,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |
@@ -592,14 +681,14 @@ Allows a CA to become verified by submitting a certificate in PEM format that ha
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import certificate_authority_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -612,7 +701,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -620,16 +709,16 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.CertificateAuthorityApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    certificate = 'certificate_example' # str | A PEM formatted certificate signed by the target CA with the common name matching the CA's validationToken
+    api_instance = certificate_authority_api.CertificateAuthorityApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    certificate = "certificate_example" # str | A PEM formatted certificate signed by the target CA with the common name matching the CA's validationToken
 
+    # example passing only required values which don't have defaults set
     try:
         # Verify a CA
         api_response = api_instance.verify_ca(id, certificate)
-        print("The response of CertificateAuthorityApi->verify_ca:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling CertificateAuthorityApi->verify_ca: %s\n" % e)
 ```
 
@@ -638,8 +727,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **certificate** | **str**| A PEM formatted certificate signed by the target CA with the common name matching the CA&#39;s validationToken | 
+ **id** | **str**| The id of the requested resource |
+ **certificate** | **str**| A PEM formatted certificate signed by the target CA with the common name matching the CA&#39;s validationToken |
 
 ### Return type
 
@@ -654,7 +743,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: text/plain
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |

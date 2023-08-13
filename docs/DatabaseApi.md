@@ -21,14 +21,14 @@ Starts a data integrity scan on the datastore. Requires admin access. Only once 
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import database_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -41,24 +41,28 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.DatabaseApi(api_client)
+    api_instance = database_api.DatabaseApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Starts a data integrity scan on the datastore
         api_response = api_instance.check_data_integrity()
-        print("The response of DatabaseApi->check_data_integrity:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling DatabaseApi->check_data_integrity: %s\n" % e)
 ```
 
@@ -79,7 +83,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Base empty response |  -  |
@@ -99,14 +105,14 @@ Create a new database snapshot. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import database_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -119,24 +125,28 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.DatabaseApi(api_client)
+    api_instance = database_api.DatabaseApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Create a new database snapshot
         api_response = api_instance.create_database_snapshot()
-        print("The response of DatabaseApi->create_database_snapshot:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling DatabaseApi->create_database_snapshot: %s\n" % e)
 ```
 
@@ -157,7 +167,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
@@ -176,14 +188,14 @@ Returns any results found from in-progress integrity checks. Requires admin acce
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.data_integrity_check_result_envelope import DataIntegrityCheckResultEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import database_api
+from openziti_edge_management.model.data_integrity_check_result_envelope import DataIntegrityCheckResultEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -196,7 +208,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -204,14 +216,14 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.DatabaseApi(api_client)
+    api_instance = database_api.DatabaseApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Returns any results found from in-progress integrity checks
         api_response = api_instance.data_integrity_results()
-        print("The response of DatabaseApi->data_integrity_results:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling DatabaseApi->data_integrity_results: %s\n" % e)
 ```
 
@@ -232,7 +244,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of data integrity issues found |  -  |
@@ -250,14 +264,14 @@ Runs a data integrity scan on the datastore, attempts to fix any issues it can, 
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import database_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -270,7 +284,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -278,14 +292,14 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.DatabaseApi(api_client)
+    api_instance = database_api.DatabaseApi(api_client)
 
+    # example, this endpoint has no required or optional parameters
     try:
         # Runs a data integrity scan on the datastore, attempts to fix any issues it can and returns any found issues
         api_response = api_instance.fix_data_integrity()
-        print("The response of DatabaseApi->fix_data_integrity:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling DatabaseApi->fix_data_integrity: %s\n" % e)
 ```
 
@@ -306,7 +320,9 @@ This endpoint does not need any parameter.
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Base empty response |  -  |

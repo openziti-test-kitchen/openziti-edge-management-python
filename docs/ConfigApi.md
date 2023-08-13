@@ -30,15 +30,15 @@ Create a config resource. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_create import ConfigCreate
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.config_create import ConfigCreate
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -51,25 +51,34 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    config = openziti_edge_management.ConfigCreate() # ConfigCreate | A config to create
+    api_instance = config_api.ConfigApi(api_client)
+    config = ConfigCreate(
+        config_type_id="config_type_id_example",
+        data={},
+        name="default.ziti-tunneler-server.v1",
+        tags=Tags(None),
+    ) # ConfigCreate | A config to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Create a config resource
         api_response = api_instance.create_config(config)
-        print("The response of ConfigApi->create_config:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->create_config: %s\n" % e)
 ```
 
@@ -78,7 +87,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **config** | [**ConfigCreate**](ConfigCreate.md)| A config to create | 
+ **config** | [**ConfigCreate**](ConfigCreate.md)| A config to create |
 
 ### Return type
 
@@ -93,7 +102,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -110,15 +121,15 @@ Create a config-type. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_type_create import ConfigTypeCreate
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.config_type_create import ConfigTypeCreate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -131,7 +142,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -139,15 +150,19 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    config_type = openziti_edge_management.ConfigTypeCreate() # ConfigTypeCreate | A config-type to create
+    api_instance = config_api.ConfigApi(api_client)
+    config_type = ConfigTypeCreate(
+        name="ziti-tunneler-server.v1",
+        schema={},
+        tags=Tags(None),
+    ) # ConfigTypeCreate | A config-type to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Create a config-type. Requires admin access.
         api_response = api_instance.create_config_type(config_type)
-        print("The response of ConfigApi->create_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->create_config_type: %s\n" % e)
 ```
 
@@ -156,7 +171,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **config_type** | [**ConfigTypeCreate**](ConfigTypeCreate.md)| A config-type to create | 
+ **config_type** | [**ConfigTypeCreate**](ConfigTypeCreate.md)| A config-type to create |
 
 ### Return type
 
@@ -171,7 +186,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -191,14 +208,14 @@ Delete a config by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -211,25 +228,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete a config
         api_response = api_instance.delete_config(id)
-        print("The response of ConfigApi->delete_config:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->delete_config: %s\n" % e)
 ```
 
@@ -238,7 +259,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -253,7 +274,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -273,14 +296,14 @@ Delete a config-type by id. Removing a configuration type that are in use will r
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -293,7 +316,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -301,15 +324,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete a config-type
         api_response = api_instance.delete_config_type(id)
-        print("The response of ConfigApi->delete_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->delete_config_type: %s\n" % e)
 ```
 
@@ -318,7 +341,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -333,7 +356,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -354,14 +379,14 @@ Retrieves a single config by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_config_envelope import DetailConfigEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.detail_config_envelope import DetailConfigEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -374,25 +399,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single config
         api_response = api_instance.detail_config(id)
-        print("The response of ConfigApi->detail_config:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->detail_config: %s\n" % e)
 ```
 
@@ -401,7 +430,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -416,7 +445,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular config resource |  -  |
@@ -435,14 +466,14 @@ Retrieves a single config-type by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_config_type_envelope import DetailConfigTypeEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.detail_config_type_envelope import DetailConfigTypeEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -455,7 +486,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -463,15 +494,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single config-type
         api_response = api_instance.detail_config_type(id)
-        print("The response of ConfigApi->detail_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->detail_config_type: %s\n" % e)
 ```
 
@@ -480,7 +511,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -495,7 +526,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular config-type resource |  -  |
@@ -505,7 +538,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_config_types**
-> ListConfigTypesEnvelope list_config_types(limit=limit, offset=offset, filter=filter)
+> ListConfigTypesEnvelope list_config_types()
 
 List config-types
 
@@ -515,14 +548,14 @@ Retrieves a list of config-type resources; supports filtering, sorting, and pagi
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_config_types_envelope import ListConfigTypesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.list_config_types_envelope import ListConfigTypesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -535,27 +568,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = config_api.ConfigApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List config-types
         api_response = api_instance.list_config_types(limit=limit, offset=offset, filter=filter)
-        print("The response of ConfigApi->list_config_types:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->list_config_types: %s\n" % e)
 ```
 
@@ -564,9 +602,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -581,7 +619,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of config-types |  -  |
@@ -591,7 +631,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_configs**
-> ListConfigsEnvelope list_configs(limit=limit, offset=offset, filter=filter)
+> ListConfigsEnvelope list_configs()
 
 List configs
 
@@ -601,14 +641,14 @@ Retrieves a list of config resources; supports filtering, sorting, and paginatio
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_configs_envelope import ListConfigsEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.list_configs_envelope import ListConfigsEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -621,27 +661,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = config_api.ConfigApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List configs
         api_response = api_instance.list_configs(limit=limit, offset=offset, filter=filter)
-        print("The response of ConfigApi->list_configs:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->list_configs: %s\n" % e)
 ```
 
@@ -650,9 +695,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -667,7 +712,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of configs |  -  |
@@ -686,14 +733,13 @@ Lists the configs associated to a config-type. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_configs_envelope import ListConfigsEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.list_configs_envelope import ListConfigsEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -706,7 +752,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -714,15 +760,15 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Lists the configs of a specific config-type
         api_response = api_instance.list_configs_for_config_type(id)
-        print("The response of ConfigApi->list_configs_for_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->list_configs_for_config_type: %s\n" % e)
 ```
 
@@ -731,7 +777,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -746,7 +792,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of configs |  -  |
@@ -764,15 +812,15 @@ Update the supplied fields on a config. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_patch import ConfigPatch
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.config_patch import ConfigPatch
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -785,26 +833,34 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    config = openziti_edge_management.ConfigPatch() # ConfigPatch | A config patch object
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    config = ConfigPatch(
+        data={},
+        name="default.ziti-tunneler-server.v1",
+        tags=Tags(None),
+    ) # ConfigPatch | A config patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on a config
         api_response = api_instance.patch_config(id, config)
-        print("The response of ConfigApi->patch_config:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->patch_config: %s\n" % e)
 ```
 
@@ -813,8 +869,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **config** | [**ConfigPatch**](ConfigPatch.md)| A config patch object | 
+ **id** | **str**| The id of the requested resource |
+ **config** | [**ConfigPatch**](ConfigPatch.md)| A config patch object |
 
 ### Return type
 
@@ -829,7 +885,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -849,15 +907,15 @@ Update the supplied fields on a config-type. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_type_patch import ConfigTypePatch
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.config_type_patch import ConfigTypePatch
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -870,7 +928,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -878,16 +936,20 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    config_type = openziti_edge_management.ConfigTypePatch() # ConfigTypePatch | A config-type patch object
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    config_type = ConfigTypePatch(
+        name="ziti-tunneler-server.v1",
+        schema={},
+        tags=Tags(None),
+    ) # ConfigTypePatch | A config-type patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on a config-type
         api_response = api_instance.patch_config_type(id, config_type)
-        print("The response of ConfigApi->patch_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->patch_config_type: %s\n" % e)
 ```
 
@@ -896,8 +958,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **config_type** | [**ConfigTypePatch**](ConfigTypePatch.md)| A config-type patch object | 
+ **id** | **str**| The id of the requested resource |
+ **config_type** | [**ConfigTypePatch**](ConfigTypePatch.md)| A config-type patch object |
 
 ### Return type
 
@@ -912,7 +974,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -933,15 +997,15 @@ Update all fields on a config by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_update import ConfigUpdate
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.config_update import ConfigUpdate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -954,26 +1018,34 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    config = openziti_edge_management.ConfigUpdate() # ConfigUpdate | A config update object
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    config = ConfigUpdate(
+        data={},
+        name="default.ziti-tunneler-server.v1",
+        tags=Tags(None),
+    ) # ConfigUpdate | A config update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on a config
         api_response = api_instance.update_config(id, config)
-        print("The response of ConfigApi->update_config:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->update_config: %s\n" % e)
 ```
 
@@ -982,8 +1054,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **config** | [**ConfigUpdate**](ConfigUpdate.md)| A config update object | 
+ **id** | **str**| The id of the requested resource |
+ **config** | [**ConfigUpdate**](ConfigUpdate.md)| A config update object |
 
 ### Return type
 
@@ -998,7 +1070,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |
@@ -1018,15 +1092,15 @@ Update all fields on a config-type by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.config_type_update import ConfigTypeUpdate
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import config_api
+from openziti_edge_management.model.config_type_update import ConfigTypeUpdate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -1039,7 +1113,7 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
@@ -1047,16 +1121,20 @@ configuration.api_key['ztSession'] = os.environ["API_KEY"]
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.ConfigApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    config_type = openziti_edge_management.ConfigTypeUpdate() # ConfigTypeUpdate | A config-type update object
+    api_instance = config_api.ConfigApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    config_type = ConfigTypeUpdate(
+        name="ziti-tunneler-server.v1",
+        schema={},
+        tags=Tags(None),
+    ) # ConfigTypeUpdate | A config-type update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on a config-type
         api_response = api_instance.update_config_type(id, config_type)
-        print("The response of ConfigApi->update_config_type:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling ConfigApi->update_config_type: %s\n" % e)
 ```
 
@@ -1065,8 +1143,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **config_type** | [**ConfigTypeUpdate**](ConfigTypeUpdate.md)| A config-type update object | 
+ **id** | **str**| The id of the requested resource |
+ **config_type** | [**ConfigTypeUpdate**](ConfigTypeUpdate.md)| A config-type update object |
 
 ### Return type
 
@@ -1081,7 +1159,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |

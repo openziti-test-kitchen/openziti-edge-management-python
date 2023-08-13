@@ -25,15 +25,15 @@ Create an edge router policy resource. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.create_envelope import CreateEnvelope
-from openziti_edge_management.models.edge_router_policy_create import EdgeRouterPolicyCreate
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
+from openziti_edge_management.model.edge_router_policy_create import EdgeRouterPolicyCreate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -46,25 +46,39 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    policy = openziti_edge_management.EdgeRouterPolicyCreate() # EdgeRouterPolicyCreate | An edge router policy to create
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    policy = EdgeRouterPolicyCreate(
+        edge_router_roles=Roles([
+            "edge_router_roles_example",
+        ]),
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        semantic=Semantic("AllOf"),
+        tags=Tags(None),
+    ) # EdgeRouterPolicyCreate | An edge router policy to create
 
+    # example passing only required values which don't have defaults set
     try:
         # Create an edge router policy resource
         api_response = api_instance.create_edge_router_policy(policy)
-        print("The response of EdgeRouterPolicyApi->create_edge_router_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->create_edge_router_policy: %s\n" % e)
 ```
 
@@ -73,7 +87,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **policy** | [**EdgeRouterPolicyCreate**](EdgeRouterPolicyCreate.md)| An edge router policy to create | 
+ **policy** | [**EdgeRouterPolicyCreate**](EdgeRouterPolicyCreate.md)| An edge router policy to create |
 
 ### Return type
 
@@ -88,7 +102,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
@@ -108,14 +124,14 @@ Delete an edge router policy by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -128,25 +144,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Delete an edge router policy
         api_response = api_instance.delete_edge_router_policy(id)
-        print("The response of EdgeRouterPolicyApi->delete_edge_router_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->delete_edge_router_policy: %s\n" % e)
 ```
 
@@ -155,7 +175,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -170,7 +190,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
@@ -191,14 +213,14 @@ Retrieves a single edge router policy by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.detail_edge_router_policy_envelope import DetailEdgeRouterPolicyEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.detail_edge_router_policy_envelope import DetailEdgeRouterPolicyEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -211,25 +233,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # Retrieves a single edge router policy
         api_response = api_instance.detail_edge_router_policy(id)
-        print("The response of EdgeRouterPolicyApi->detail_edge_router_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->detail_edge_router_policy: %s\n" % e)
 ```
 
@@ -238,7 +264,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -253,7 +279,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single edge router policy |  -  |
@@ -263,7 +291,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_edge_router_policies**
-> ListEdgeRouterPoliciesEnvelope list_edge_router_policies(limit=limit, offset=offset, filter=filter)
+> ListEdgeRouterPoliciesEnvelope list_edge_router_policies()
 
 List edge router policies
 
@@ -273,14 +301,14 @@ Retrieves a list of edge router policy resources; supports filtering, sorting, a
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_edge_router_policies_envelope import ListEdgeRouterPoliciesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.list_edge_router_policies_envelope import ListEdgeRouterPoliciesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -293,27 +321,32 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    limit = 56 # int |  (optional)
-    offset = 56 # int |  (optional)
-    filter = 'filter_example' # str |  (optional)
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
 
+    # example passing only required values which don't have defaults set
+    # and optional values
     try:
         # List edge router policies
         api_response = api_instance.list_edge_router_policies(limit=limit, offset=offset, filter=filter)
-        print("The response of EdgeRouterPolicyApi->list_edge_router_policies:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->list_edge_router_policies: %s\n" % e)
 ```
 
@@ -322,9 +355,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] 
- **offset** | **int**|  | [optional] 
- **filter** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
 
 ### Return type
 
@@ -339,7 +372,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of edge router policies |  -  |
@@ -359,14 +394,14 @@ Retrieves a list of edge routers an edge router policy resources affects; suppor
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_edge_routers_envelope import ListEdgeRoutersEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.list_edge_routers_envelope import ListEdgeRoutersEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -379,25 +414,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # List edge routers a policy affects
         api_response = api_instance.list_edge_router_policy_edge_routers(id)
-        print("The response of EdgeRouterPolicyApi->list_edge_router_policy_edge_routers:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->list_edge_router_policy_edge_routers: %s\n" % e)
 ```
 
@@ -406,7 +445,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -421,7 +460,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of edge routers |  -  |
@@ -441,14 +482,14 @@ Retrieves a list of identities an edge router policy resources affects; supports
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.list_identities_envelope import ListIdentitiesEnvelope
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.list_identities_envelope import ListIdentitiesEnvelope
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -461,25 +502,29 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
 
+    # example passing only required values which don't have defaults set
     try:
         # List identities an edge router policy affects
         api_response = api_instance.list_edge_router_policy_identities(id)
-        print("The response of EdgeRouterPolicyApi->list_edge_router_policy_identities:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->list_edge_router_policy_identities: %s\n" % e)
 ```
 
@@ -488,7 +533,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
+ **id** | **str**| The id of the requested resource |
 
 ### Return type
 
@@ -503,7 +548,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of identities |  -  |
@@ -523,15 +570,15 @@ Update the supplied fields on an edge router policy. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.edge_router_policy_patch import EdgeRouterPolicyPatch
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.edge_router_policy_patch import EdgeRouterPolicyPatch
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -544,26 +591,40 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    policy = openziti_edge_management.EdgeRouterPolicyPatch() # EdgeRouterPolicyPatch | An edge router policy patch object
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    policy = EdgeRouterPolicyPatch(
+        edge_router_roles=Roles([
+            "edge_router_roles_example",
+        ]),
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        semantic=Semantic("AllOf"),
+        tags=Tags(None),
+    ) # EdgeRouterPolicyPatch | An edge router policy patch object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update the supplied fields on an edge router policy
         api_response = api_instance.patch_edge_router_policy(id, policy)
-        print("The response of EdgeRouterPolicyApi->patch_edge_router_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->patch_edge_router_policy: %s\n" % e)
 ```
 
@@ -572,8 +633,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **policy** | [**EdgeRouterPolicyPatch**](EdgeRouterPolicyPatch.md)| An edge router policy patch object | 
+ **id** | **str**| The id of the requested resource |
+ **policy** | [**EdgeRouterPolicyPatch**](EdgeRouterPolicyPatch.md)| An edge router policy patch object |
 
 ### Return type
 
@@ -588,7 +649,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
@@ -609,15 +672,15 @@ Update all fields on an edge router policy by id. Requires admin access.
 
 * Api Key Authentication (ztSession):
 * OAuth Authentication (oauth2):
+
 ```python
 import time
-import os
 import openziti_edge_management
-from openziti_edge_management.models.edge_router_policy_update import EdgeRouterPolicyUpdate
-from openziti_edge_management.models.empty import Empty
-from openziti_edge_management.rest import ApiException
+from openziti_edge_management.api import edge_router_policy_api
+from openziti_edge_management.model.edge_router_policy_update import EdgeRouterPolicyUpdate
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
-
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openziti_edge_management.Configuration(
@@ -630,26 +693,40 @@ configuration = openziti_edge_management.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: ztSession
-configuration.api_key['ztSession'] = os.environ["API_KEY"]
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openziti_edge_management.EdgeRouterPolicyApi(api_client)
-    id = 'id_example' # str | The id of the requested resource
-    policy = openziti_edge_management.EdgeRouterPolicyUpdate() # EdgeRouterPolicyUpdate | An edge router policy update object
+    api_instance = edge_router_policy_api.EdgeRouterPolicyApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    policy = EdgeRouterPolicyUpdate(
+        edge_router_roles=Roles([
+            "edge_router_roles_example",
+        ]),
+        identity_roles=Roles([
+            "identity_roles_example",
+        ]),
+        name="name_example",
+        semantic=Semantic("AllOf"),
+        tags=Tags(None),
+    ) # EdgeRouterPolicyUpdate | An edge router policy update object
 
+    # example passing only required values which don't have defaults set
     try:
         # Update all fields on an edge router policy
         api_response = api_instance.update_edge_router_policy(id, policy)
-        print("The response of EdgeRouterPolicyApi->update_edge_router_policy:\n")
         pprint(api_response)
-    except Exception as e:
+    except openziti_edge_management.ApiException as e:
         print("Exception when calling EdgeRouterPolicyApi->update_edge_router_policy: %s\n" % e)
 ```
 
@@ -658,8 +735,8 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| The id of the requested resource | 
- **policy** | [**EdgeRouterPolicyUpdate**](EdgeRouterPolicyUpdate.md)| An edge router policy update object | 
+ **id** | **str**| The id of the requested resource |
+ **policy** | [**EdgeRouterPolicyUpdate**](EdgeRouterPolicyUpdate.md)| An edge router policy update object |
 
 ### Return type
 
@@ -674,7 +751,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |

@@ -41,3 +41,4 @@ from openziti_edge_management.api.service_policy_api import ServicePolicyApi
 from openziti_edge_management.api.session_api import SessionApi
 from openziti_edge_management.api.terminator_api import TerminatorApi
 from openziti_edge_management.api.tracing_api import TracingApi
+from openziti_edge_management.api.well_known_api import WellKnownApi

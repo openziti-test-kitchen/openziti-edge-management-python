@@ -4,26 +4,19 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**processes** | [**List[ProcessMulti]**](ProcessMulti.md) |  | 
+**processes** | [**[ProcessMulti]**](ProcessMulti.md) |  | 
 **semantic** | [**Semantic**](Semantic.md) |  | 
+**links** | [**Links**](Links.md) |  | 
+**created_at** | **datetime** |  | 
+**id** | **str** |  | 
+**name** | **str** |  | 
+**role_attributes** | [**Attributes**](Attributes.md) |  | 
+**tags** | [**Tags**](Tags.md) |  | 
+**type_id** | **str** |  | 
+**updated_at** | **datetime** |  | 
+**version** | **int** |  | 
+**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
-## Example
-
-```python
-from openziti_edge_management.models.posture_check_process_multi_detail import PostureCheckProcessMultiDetail
-
-# TODO update the JSON string below
-json = "{}"
-# create an instance of PostureCheckProcessMultiDetail from a JSON string
-posture_check_process_multi_detail_instance = PostureCheckProcessMultiDetail.from_json(json)
-# print the JSON string representation of the object
-print PostureCheckProcessMultiDetail.to_json()
-
-# convert the object into a dict
-posture_check_process_multi_detail_dict = posture_check_process_multi_detail_instance.to_dict()
-# create an instance of PostureCheckProcessMultiDetail from a dict
-posture_check_process_multi_detail_form_dict = posture_check_process_multi_detail.from_dict(posture_check_process_multi_detail_dict)
-```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
