@@ -16,11 +16,12 @@ function _generate {
         --git-host 'github.com' \
         --git-repo-id 'openziti-edge-management-python' \
         --git-user-id 'openziti-test-kitchen' \
-        --input-spec "https://raw.githubusercontent.com/$REPO/$tag/management.yml" \
+        --input-spec "https://raw.githubusercontent.com/openziti/edge-api/tmp-patch-allowedSigners/management.yml" \
         --output '/out' \
         --package-name 'openziti_edge_management' \
         --additional-properties=packageVersion="${tag#v}" \
         --additional-properties=packageUrl="https://github.com/openziti-test-kitchen/openziti-edge-management-python"
+#--input-spec "https://raw.githubusercontent.com/$REPO/$tag/management.yml" \main
 }
 
 function _get_latest_tag {
@@ -40,7 +41,7 @@ function _test_tag_exists {
 }
 
 function local_modify {
-    echo "tags" >> .gitignore
+    grep -q 'tags' .gitignore || echo 'tags' >> .gitignore
 }
 
 function _usage {

@@ -69,7 +69,7 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
         """
         return (bool, date, datetime, dict, float, int, list, str, none_type,)  # noqa: E501
 
-    _nullable = False
+    _nullable = True
 
     @cached_property
     def openapi_types():
@@ -82,8 +82,8 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
                 and the value is attribute type.
         """
         return {
-            'allowed': (bool,),  # noqa: E501
-            'allowed_signers': ([str],),  # noqa: E501
+            'allowed': (bool, none_type,),  # noqa: E501
+            'allowed_signers': ([str], none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -103,12 +103,8 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, allowed, allowed_signers, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, *args, **kwargs):  # noqa: E501
         """AuthPolicyPrimaryExtJwt - a model defined in OpenAPI
-
-        Args:
-            allowed (bool):
-            allowed_signers ([str]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -141,6 +137,8 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            allowed (bool, none_type): [optional]  # noqa: E501
+            allowed_signers ([str], none_type): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -172,8 +170,6 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
-        self.allowed = allowed
-        self.allowed_signers = allowed_signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -194,12 +190,8 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, allowed, allowed_signers, *args, **kwargs):  # noqa: E501
+    def __init__(self, *args, **kwargs):  # noqa: E501
         """AuthPolicyPrimaryExtJwt - a model defined in OpenAPI
-
-        Args:
-            allowed (bool):
-            allowed_signers ([str]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -232,6 +224,8 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            allowed (bool, none_type): [optional]  # noqa: E501
+            allowed_signers ([str], none_type): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -261,8 +255,6 @@ class AuthPolicyPrimaryExtJwt(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
-        self.allowed = allowed
-        self.allowed_signers = allowed_signers
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
