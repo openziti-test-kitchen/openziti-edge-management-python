@@ -11,7 +11,7 @@
 """
 
 
-__version__ = "0.25.31"
+__version__ = "0.25.33"
 
 # import ApiClient
 from openziti_edge_management.api_client import ApiClient

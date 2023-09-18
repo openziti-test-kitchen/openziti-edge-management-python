@@ -12,7 +12,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "openziti-edge-management"
-VERSION = "0.25.31"
+VERSION = "0.25.33"
 # To install the library, run the following
 #
 # python setup.py install
