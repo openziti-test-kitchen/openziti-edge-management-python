@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **config** | **{str: ({str: (bool, date, datetime, dict, float, int, list, str, none_type,)},)}** | map of config data for this service keyed by the config type name. Only configs of the types requested will be returned. | 
 **configs** | **[str]** |  | 
 **encryption_required** | **bool** | Describes whether connections must support end-to-end encryption on both sides of the connection. Read-only property, set at create. | 
+**max_idle_time_millis** | **int** |  | 
 **name** | **str** |  | 
 **permissions** | [**DialBindArray**](DialBindArray.md) |  | 
 **posture_queries** | [**[PostureQueries]**](PostureQueries.md) |  | 

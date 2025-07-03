@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **encryption_required** | **bool** | Describes whether connections must support end-to-end encryption on both sides of the connection. | 
 **name** | **str** |  | 
 **configs** | **[str]** |  | [optional] 
+**max_idle_time_millis** | **int** |  | [optional] 
 **role_attributes** | **[str]** |  | [optional] 
 **tags** | [**Tags**](Tags.md) |  | [optional] 
 **terminator_strategy** | **str** |  | [optional] 

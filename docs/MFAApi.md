@@ -32,6 +32,7 @@ import time
 import openziti_edge_management
 from openziti_edge_management.api import mfa_api
 from openziti_edge_management.model.mfa_code import MfaCode
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from openziti_edge_management.model.empty import Empty
 from pprint import pprint
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
@@ -101,11 +102,12 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
 **401** | Base empty response |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_mfa_recovery_codes**
-> DetailMfaRecoveryCodesEnvelope create_mfa_recovery_codes(mfa_validation)
+> Empty create_mfa_recovery_codes(mfa_validation)
 
 For a completed MFA enrollment regenerate the recovery codes
 
@@ -121,8 +123,8 @@ import time
 import openziti_edge_management
 from openziti_edge_management.api import mfa_api
 from openziti_edge_management.model.mfa_code import MfaCode
-from openziti_edge_management.model.detail_mfa_recovery_codes_envelope import DetailMfaRecoveryCodesEnvelope
 from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
 from pprint import pprint
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
@@ -173,7 +175,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DetailMfaRecoveryCodesEnvelope**](DetailMfaRecoveryCodesEnvelope.md)
+[**Empty**](Empty.md)
 
 ### Authorization
 
@@ -189,8 +191,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | The recovery codes of an MFA enrollment |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**200** | Base empty response |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -279,7 +281,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -363,7 +365,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The details of an MFA enrollment |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -449,7 +451,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **detail_mfa_recovery_codes**
-> Empty detail_mfa_recovery_codes()
+> DetailMfaRecoveryCodesEnvelope detail_mfa_recovery_codes()
 
 For a completed MFA enrollment view the current recovery codes
 
@@ -465,8 +467,8 @@ import time
 import openziti_edge_management
 from openziti_edge_management.api import mfa_api
 from openziti_edge_management.model.mfa_code import MfaCode
+from openziti_edge_management.model.detail_mfa_recovery_codes_envelope import DetailMfaRecoveryCodesEnvelope
 from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
-from openziti_edge_management.model.empty import Empty
 from pprint import pprint
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
 # See configuration.py for a list of all supported configuration parameters.
@@ -520,7 +522,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Empty**](Empty.md)
+[**DetailMfaRecoveryCodesEnvelope**](DetailMfaRecoveryCodesEnvelope.md)
 
 ### Authorization
 
@@ -536,8 +538,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Base empty response |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**200** | The recovery codes of an MFA enrollment |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -621,7 +623,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **409** | The identity is already enrolled in MFA |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -636,6 +638,7 @@ Allows an admin to remove MFA enrollment from a specific identity. Requires admi
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -660,6 +663,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -689,7 +698,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -702,8 +711,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -793,7 +804,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

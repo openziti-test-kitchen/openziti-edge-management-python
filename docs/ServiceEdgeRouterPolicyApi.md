@@ -109,7 +109,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -197,8 +199,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**404** | The requested resource does not exist |  -  |
 **409** | The resource requested to be removed/altered cannot be as it is referenced by another object. |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -285,8 +290,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single service edge router policy |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -379,7 +386,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of service edge router policies |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -466,8 +475,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of edge routers |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -554,8 +565,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of services |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -656,8 +669,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -758,8 +773,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

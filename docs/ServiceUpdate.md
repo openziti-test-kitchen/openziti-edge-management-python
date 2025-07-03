@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **configs** | **[str]** |  | [optional] 
 **encryption_required** | **bool** | Describes whether connections must support end-to-end encryption on both sides of the connection. Read-only property, set at create. | [optional] 
+**max_idle_time_millis** | **int** |  | [optional] 
 **role_attributes** | **[str]** |  | [optional] 
 **tags** | [**Tags**](Tags.md) |  | [optional] 
 **terminator_strategy** | **str** |  | [optional] 

@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A response containg the identity&#39;s new certificate |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -188,7 +188,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

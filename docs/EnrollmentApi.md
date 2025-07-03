@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**delete_enrollment**](EnrollmentApi.md#delete_enrollment) | **DELETE** /enrollments/{id} | Delete an outstanding enrollment
 [**detail_enrollment**](EnrollmentApi.md#detail_enrollment) | **GET** /enrollments/{id} | Retrieves an outstanding enrollment
 [**list_enrollments**](EnrollmentApi.md#list_enrollments) | **GET** /enrollments | List outstanding enrollments
+[**list_network_jwts**](EnrollmentApi.md#list_network_jwts) | **GET** /network-jwts | Returns a list of JWTs suitable for bootstrapping network trust.
 [**refresh_enrollment**](EnrollmentApi.md#refresh_enrollment) | **POST** /enrollments/{id}/refresh | Refreshes an enrollment record&#39;s expiration window
 
 
@@ -102,8 +103,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **409** | The request could not be completed due to a conflict of configuration or state |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -191,7 +194,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -278,8 +284,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular enrollment resource |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -372,7 +380,75 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of enrollments |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_network_jwts**
+> ListNetworkJWTsEnvelope list_network_jwts()
+
+Returns a list of JWTs suitable for bootstrapping network trust.
+
+Returns a list of JWTs for trusting a network
+
+### Example
+
+
+```python
+import time
+import openziti_edge_management
+from openziti_edge_management.api import enrollment_api
+from openziti_edge_management.model.list_network_jwts_envelope import ListNetworkJWTsEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from pprint import pprint
+# Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+
+
+# Enter a context with an instance of the API client
+with openziti_edge_management.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = enrollment_api.EnrollmentApi(api_client)
+
+    # example, this endpoint has no required or optional parameters
+    try:
+        # Returns a list of JWTs suitable for bootstrapping network trust.
+        api_response = api_instance.list_network_jwts()
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling EnrollmentApi->list_network_jwts: %s\n" % e)
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ListNetworkJWTsEnvelope**](ListNetworkJWTsEnvelope.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of network JWTs |  -  |
+**400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -465,7 +541,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The create request was successful and the resource has been added at the following location |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

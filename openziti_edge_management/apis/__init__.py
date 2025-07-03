@@ -20,6 +20,7 @@ from openziti_edge_management.api.authentication_api import AuthenticationApi
 from openziti_edge_management.api.authenticator_api import AuthenticatorApi
 from openziti_edge_management.api.certificate_authority_api import CertificateAuthorityApi
 from openziti_edge_management.api.config_api import ConfigApi
+from openziti_edge_management.api.controllers_api import ControllersApi
 from openziti_edge_management.api.current_api_session_api import CurrentAPISessionApi
 from openziti_edge_management.api.current_identity_api import CurrentIdentityApi
 from openziti_edge_management.api.database_api import DatabaseApi
@@ -39,6 +40,7 @@ from openziti_edge_management.api.service_api import ServiceApi
 from openziti_edge_management.api.service_edge_router_policy_api import ServiceEdgeRouterPolicyApi
 from openziti_edge_management.api.service_policy_api import ServicePolicyApi
 from openziti_edge_management.api.session_api import SessionApi
+from openziti_edge_management.api.settings_api import SettingsApi
 from openziti_edge_management.api.terminator_api import TerminatorApi
 from openziti_edge_management.api.tracing_api import TracingApi
 from openziti_edge_management.api.well_known_api import WellKnownApi

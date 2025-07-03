@@ -44,6 +44,8 @@ with openziti_edge_management.ApiClient() as api_client:
         ]),
         env_info=EnvInfo(
             arch="arch_example",
+            domain="domain_example",
+            hostname="hostname_example",
             os="os_example",
             os_release="os_release_example",
             os_version="os_version_example",
@@ -107,6 +109,7 @@ No authorization required
 **200** | The API session associated with the session used to issue the request |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
 **401** | The authentication request could not be processed as the credentials are invalid |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -127,6 +130,7 @@ import time
 import openziti_edge_management
 from openziti_edge_management.api import authentication_api
 from openziti_edge_management.model.mfa_code import MfaCode
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from openziti_edge_management.model.empty import Empty
 from pprint import pprint
 # Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
@@ -196,6 +200,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Base empty response |  -  |
 **401** | Base empty response |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

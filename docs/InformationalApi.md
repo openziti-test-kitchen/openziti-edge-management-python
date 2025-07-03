@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**detail_spec**](InformationalApi.md#detail_spec) | **GET** /specs/{id} | Return a single spec resource
 [**detail_spec_body**](InformationalApi.md#detail_spec_body) | **GET** /specs/{id}/spec | Returns the spec&#39;s file
+[**list_enumerated_capabilities**](InformationalApi.md#list_enumerated_capabilities) | **GET** /enumerated-capabilities | Returns all capabilities this version of the controller is aware of, enabled or not.
 [**list_root**](InformationalApi.md#list_root) | **GET** / | Returns version information
 [**list_specs**](InformationalApi.md#list_specs) | **GET** /specs | Returns a list of API specs
 [**list_summary**](InformationalApi.md#list_summary) | **GET** /summary | Returns a list of accessible resource counts
@@ -146,6 +147,67 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **list_enumerated_capabilities**
+> ListEnumeratedCapabilitiesEnvelope list_enumerated_capabilities()
+
+Returns all capabilities this version of the controller is aware of, enabled or not.
+
+### Example
+
+
+```python
+import time
+import openziti_edge_management
+from openziti_edge_management.api import informational_api
+from openziti_edge_management.model.list_enumerated_capabilities_envelope import ListEnumeratedCapabilitiesEnvelope
+from pprint import pprint
+# Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+
+
+# Enter a context with an instance of the API client
+with openziti_edge_management.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = informational_api.InformationalApi(api_client)
+
+    # example, this endpoint has no required or optional parameters
+    try:
+        # Returns all capabilities this version of the controller is aware of, enabled or not.
+        api_response = api_instance.list_enumerated_capabilities()
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling InformationalApi->list_enumerated_capabilities: %s\n" % e)
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ListEnumeratedCapabilitiesEnvelope**](ListEnumeratedCapabilitiesEnvelope.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A typed and enumerated list of capabilities |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **list_root**
 > ListVersionEnvelope list_root()
 
@@ -280,6 +342,7 @@ This endpoint is usefull for UIs that wish to display UI elements with counts.
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -305,6 +368,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
 
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -329,7 +398,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -342,7 +411,9 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Entity counts scopped to the current identitie&#39;s access |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

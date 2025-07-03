@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **identity** | [**EntityRef**](EntityRef.md) |  | 
 **identity_id** | **str** |  | 
 **ip_address** | **str** |  | 
+**is_cert_extendable** | **bool** |  | 
 **is_mfa_complete** | **bool** |  | 
 **is_mfa_required** | **bool** |  | 
 **token** | **str** |  | 
@@ -22,6 +23,9 @@ Name | Type | Description | Notes
 **expires_at** | **datetime** |  | 
 **tags** | [**Tags**](Tags.md) |  | [optional] 
 **cached_last_activity_at** | **datetime** |  | [optional] 
+**improper_client_cert_chain** | **bool** |  | [optional] 
+**is_cert_extend_requested** | **bool** |  | [optional] 
+**is_cert_key_roll_requested** | **bool** |  | [optional] 
 **last_activity_at** | **datetime** |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

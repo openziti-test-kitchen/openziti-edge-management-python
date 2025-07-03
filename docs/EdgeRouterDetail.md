@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **enrollment_jwt** | **str, none_type** |  | [optional] 
 **enrollment_token** | **str, none_type** |  | [optional] 
 **fingerprint** | **str** |  | [optional] 
+**interfaces** | [**[Interface]**](Interface.md) |  | [optional] 
 **unverified_cert_pem** | **str, none_type** |  | [optional] 
 **unverified_fingerprint** | **str, none_type** |  | [optional] 
 **version_info** | [**VersionInfo**](VersionInfo.md) |  | [optional] 

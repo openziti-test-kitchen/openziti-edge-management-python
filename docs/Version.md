@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **api_versions** | **{str: ({str: (ApiVersion,)},)}** |  | [optional] 
 **build_date** | **str** |  | [optional] 
+**capabilities** | **[str]** |  | [optional] 
 **revision** | **str** |  | [optional] 
 **runtime_version** | **str** |  | [optional] 
 **version** | **str** |  | [optional] 

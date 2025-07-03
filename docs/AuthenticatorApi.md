@@ -10,11 +10,13 @@ Method | HTTP request | Description
 [**list_authenticators**](AuthenticatorApi.md#list_authenticators) | **GET** /authenticators | List authenticators
 [**patch_authenticator**](AuthenticatorApi.md#patch_authenticator) | **PATCH** /authenticators/{id} | Update the supplied fields on an authenticator
 [**re_enroll_authenticator**](AuthenticatorApi.md#re_enroll_authenticator) | **POST** /authenticators/{id}/re-enroll | Reverts an authenticator to an enrollment
+[**request_extend_all_cert_authenticators**](AuthenticatorApi.md#request_extend_all_cert_authenticators) | **POST** /identities/{id}/request-extend | Indicate all certificate authenticators for the identity should be extended and optionally key rolled on next authentication.
+[**request_extend_authenticator**](AuthenticatorApi.md#request_extend_authenticator) | **POST** /authenticators/{id}/request-extend | Indicate a certificate authenticator should be extended and optionally key rolled on next authentication.
 [**update_authenticator**](AuthenticatorApi.md#update_authenticator) | **PUT** /authenticators/{id} | Update all fields on an authenticator
 
 
 # **create_authenticator**
-> AuthenticatorCreate create_authenticator(authenticator)
+> CreateEnvelope create_authenticator(authenticator)
 
 Creates an authenticator
 
@@ -23,11 +25,13 @@ Creates an authenticator for a specific identity. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
 import openziti_edge_management
 from openziti_edge_management.api import authenticator_api
+from openziti_edge_management.model.create_envelope import CreateEnvelope
 from openziti_edge_management.model.authenticator_create import AuthenticatorCreate
 from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
 from pprint import pprint
@@ -47,6 +51,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -79,11 +89,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthenticatorCreate**](AuthenticatorCreate.md)
+[**CreateEnvelope**](CreateEnvelope.md)
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -95,9 +105,11 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | The create was successful |  -  |
+**201** | The create request was successful and the resource has been added at the following location |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -111,6 +123,7 @@ Delete an authenticator by id. Deleting all authenticators for an identity will 
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -135,6 +148,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -164,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -178,7 +197,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -192,6 +214,7 @@ Retrieves a single authenticator by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -216,6 +239,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -245,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -258,8 +287,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A singular authenticator resource |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -352,7 +383,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of authenticators |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -366,6 +399,7 @@ Update the supplied fields on an authenticator by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -391,6 +425,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -426,7 +466,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -440,8 +480,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -455,6 +497,7 @@ Allows an authenticator to be reverted to an enrollment and allows re-enrollment
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -480,6 +523,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -513,7 +562,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -526,8 +575,202 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **request_extend_all_cert_authenticators**
+> Empty request_extend_all_cert_authenticators(id, request_extend_authenticator)
+
+Indicate all certificate authenticators for the identity should be extended and optionally key rolled on next authentication.
+
+Allows all certificate authenticators on an identity to be flagged for early extension and optionally private  key rolling. Connecting clients will receive flags in their API Session indicating that an early extension is  request and a hint on whether private keys should be rolled. Clients that do not support extension or cannot  roll keys may ignore one or both flags.  If this request is made against an identity with zero certificate authenticators, a 403 will be returned. 
+
+### Example
+
+* Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
+
+```python
+import time
+import openziti_edge_management
+from openziti_edge_management.api import authenticator_api
+from openziti_edge_management.model.request_extend_authenticator import RequestExtendAuthenticator
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
+from pprint import pprint
+# Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ztSession
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# Enter a context with an instance of the API client
+with openziti_edge_management.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = authenticator_api.AuthenticatorApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    request_extend_authenticator = RequestExtendAuthenticator(
+        roll_keys=True,
+    ) # RequestExtendAuthenticator | A request to flag a certificate authenticator for early extension/key rolling.
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Indicate all certificate authenticators for the identity should be extended and optionally key rolled on next authentication.
+        api_response = api_instance.request_extend_all_cert_authenticators(id, request_extend_authenticator)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling AuthenticatorApi->request_extend_all_cert_authenticators: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| The id of the requested resource |
+ **request_extend_authenticator** | [**RequestExtendAuthenticator**](RequestExtendAuthenticator.md)| A request to flag a certificate authenticator for early extension/key rolling. |
+
+### Return type
+
+[**Empty**](Empty.md)
+
+### Authorization
+
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Base empty response |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**403** | The request could not be completed and will never complete due to unchangeable state or conflicts. |  -  |
+**404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **request_extend_authenticator**
+> Empty request_extend_authenticator(id, request_extend_authenticator)
+
+Indicate a certificate authenticator should be extended and optionally key rolled on next authentication.
+
+Allows a certificate authenticator to be flagged for early extension and optionally private key rolling.  Connecting clients will receive flags in their API Session indicating that an early extension is request and a hint on whether private keys should be rolled. Clients that do not support extension or cannot roll keys may ignore one or both flags.  If this request is made against a non-certificate based authenticator, it will return a 403-forbidden error. 
+
+### Example
+
+* Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
+
+```python
+import time
+import openziti_edge_management
+from openziti_edge_management.api import authenticator_api
+from openziti_edge_management.model.request_extend_authenticator import RequestExtendAuthenticator
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from openziti_edge_management.model.empty import Empty
+from pprint import pprint
+# Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ztSession
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# Enter a context with an instance of the API client
+with openziti_edge_management.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = authenticator_api.AuthenticatorApi(api_client)
+    id = "id_example" # str | The id of the requested resource
+    request_extend_authenticator = RequestExtendAuthenticator(
+        roll_keys=True,
+    ) # RequestExtendAuthenticator | A request to flag a certificate authenticator for early extension/key rolling.
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Indicate a certificate authenticator should be extended and optionally key rolled on next authentication.
+        api_response = api_instance.request_extend_authenticator(id, request_extend_authenticator)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling AuthenticatorApi->request_extend_authenticator: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| The id of the requested resource |
+ **request_extend_authenticator** | [**RequestExtendAuthenticator**](RequestExtendAuthenticator.md)| A request to flag a certificate authenticator for early extension/key rolling. |
+
+### Return type
+
+[**Empty**](Empty.md)
+
+### Authorization
+
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Base empty response |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**403** | The request could not be completed and will never complete due to unchangeable state or conflicts. |  -  |
+**404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -541,6 +784,7 @@ Update all fields on an authenticator by id. Requires admin access.
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -566,6 +810,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -601,7 +851,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -615,8 +865,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

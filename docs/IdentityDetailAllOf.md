@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **authenticators** | [**IdentityAuthenticators**](IdentityAuthenticators.md) |  | 
 **default_hosting_cost** | [**TerminatorCost**](TerminatorCost.md) |  | 
 **disabled** | **bool** |  | 
+**edge_router_connection_status** | **str** |  | 
 **enrollment** | [**IdentityEnrollments**](IdentityEnrollments.md) |  | 
 **env_info** | [**EnvInfo**](EnvInfo.md) |  | 
 **external_id** | **str, none_type** |  | 
@@ -28,6 +29,7 @@ Name | Type | Description | Notes
 **default_hosting_precedence** | [**TerminatorPrecedence**](TerminatorPrecedence.md) |  | [optional] 
 **disabled_at** | **datetime, none_type** |  | [optional] 
 **disabled_until** | **datetime, none_type** |  | [optional] 
+**interfaces** | [**[Interface]**](Interface.md) |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

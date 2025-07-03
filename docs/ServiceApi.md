@@ -70,6 +70,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
             "configs_example",
         ],
         encryption_required=True,
+        max_idle_time_millis=1,
         name="name_example",
         role_attributes=[
             "role_attributes_example",
@@ -114,7 +115,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **201** | The create request was successful and the resource has been added at the following location |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -202,8 +205,11 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The delete request was successful and the resource has been removed |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**404** | The requested resource does not exist |  -  |
 **409** | The resource requested to be removed/altered cannot be as it is referenced by another object. |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -290,8 +296,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A single service |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -394,7 +402,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of configs |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -497,7 +507,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of edge routers |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -551,6 +563,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     limit = 1 # int |  (optional)
     offset = 1 # int |  (optional)
     filter = "filter_example" # str |  (optional)
+    policy_type = "dial" # str |  (optional)
 
     # example passing only required values which don't have defaults set
     try:
@@ -564,7 +577,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # List identities with access
-        api_response = api_instance.list_service_identities(id, limit=limit, offset=offset, filter=filter)
+        api_response = api_instance.list_service_identities(id, limit=limit, offset=offset, filter=filter, policy_type=policy_type)
         pprint(api_response)
     except openziti_edge_management.ApiException as e:
         print("Exception when calling ServiceApi->list_service_identities: %s\n" % e)
@@ -579,6 +592,7 @@ Name | Type | Description  | Notes
  **limit** | **int**|  | [optional]
  **offset** | **int**|  | [optional]
  **filter** | **str**|  | [optional]
+ **policy_type** | **str**|  | [optional]
 
 ### Return type
 
@@ -600,7 +614,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of identities |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -703,7 +719,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of service edge router policies |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -806,7 +824,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of service policies |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -909,7 +929,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of terminators |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -962,6 +984,9 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     limit = 1 # int |  (optional)
     offset = 1 # int |  (optional)
     filter = "filter_example" # str |  (optional)
+    config_types = [
+        "configTypes_example",
+    ] # [str] |  (optional)
     role_filter = [
         "roleFilter_example",
     ] # [str] |  (optional)
@@ -971,7 +996,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
     # and optional values
     try:
         # List services
-        api_response = api_instance.list_services(limit=limit, offset=offset, filter=filter, role_filter=role_filter, role_semantic=role_semantic)
+        api_response = api_instance.list_services(limit=limit, offset=offset, filter=filter, config_types=config_types, role_filter=role_filter, role_semantic=role_semantic)
         pprint(api_response)
     except openziti_edge_management.ApiException as e:
         print("Exception when calling ServiceApi->list_services: %s\n" % e)
@@ -985,6 +1010,7 @@ Name | Type | Description  | Notes
  **limit** | **int**|  | [optional]
  **offset** | **int**|  | [optional]
  **filter** | **str**|  | [optional]
+ **config_types** | **[str]**|  | [optional]
  **role_filter** | **[str]**|  | [optional]
  **role_semantic** | **str**|  | [optional]
 
@@ -1008,7 +1034,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of services |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1065,6 +1093,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
             "configs_example",
         ],
         encryption_required=True,
+        max_idle_time_millis=1,
         name="name_example",
         role_attributes=[
             "role_attributes_example",
@@ -1110,8 +1139,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The patch request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1168,6 +1199,7 @@ with openziti_edge_management.ApiClient(configuration) as api_client:
             "configs_example",
         ],
         encryption_required=True,
+        max_idle_time_millis=1,
         name="name_example",
         role_attributes=[
             "role_attributes_example",
@@ -1213,8 +1245,10 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | The update request was successful and the resource has been altered |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
 **404** | The requested resource does not exist |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

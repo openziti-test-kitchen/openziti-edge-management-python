@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **enrollment_expires_at** | **datetime, none_type** |  | [optional] 
 **enrollment_jwt** | **str, none_type** |  | [optional] 
 **enrollment_token** | **str, none_type** |  | [optional] 
+**interfaces** | [**[Interface]**](Interface.md) |  | [optional] 
 **unverified_cert_pem** | **str, none_type** |  | [optional] 
 **unverified_fingerprint** | **str, none_type** |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]

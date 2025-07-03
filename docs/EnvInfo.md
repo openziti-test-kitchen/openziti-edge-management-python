@@ -6,6 +6,8 @@ Environment information an authenticating client may provide
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **arch** | **str** |  | [optional] 
+**domain** | **str** |  | [optional] 
+**hostname** | **str** |  | [optional] 
 **os** | **str** |  | [optional] 
 **os_release** | **str** |  | [optional] 
 **os_version** | **str** |  | [optional] 

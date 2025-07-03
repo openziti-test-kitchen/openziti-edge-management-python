@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**list_edge_router_role_attributes**](RoleAttributesApi.md#list_edge_router_role_attributes) | **GET** /edge-router-role-attributes | List role attributes in use by edge routers
 [**list_identity_role_attributes**](RoleAttributesApi.md#list_identity_role_attributes) | **GET** /identity-role-attributes | List role attributes in use by identities
+[**list_posture_check_role_attributes**](RoleAttributesApi.md#list_posture_check_role_attributes) | **GET** /posture-check-role-attributes | List role attributes in use by posture checks
 [**list_service_role_attributes**](RoleAttributesApi.md#list_service_role_attributes) | **GET** /service-role-attributes | List role attributes in use by services
 
 
@@ -98,7 +99,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of role attributes |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -112,6 +115,7 @@ Retrieves a list of role attributes in use by identities; supports filtering, so
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -136,6 +140,12 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -170,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -184,20 +194,23 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of role attributes |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_service_role_attributes**
-> ListRoleAttributesEnvelope list_service_role_attributes()
+# **list_posture_check_role_attributes**
+> ListRoleAttributesEnvelope list_posture_check_role_attributes()
 
-List role attributes in use by services
+List role attributes in use by posture checks
 
-Retrieves a list of role attributes in use by services; supports filtering, sorting, and pagination. Requires admin access. 
+Retrieves a list of role attributes in use by posture checks; supports filtering, sorting, and pagination. Requires admin access. 
 
 ### Example
 
 * Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
 
 ```python
 import time
@@ -222,6 +235,107 @@ configuration.api_key['ztSession'] = 'YOUR_API_KEY'
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+
+# Enter a context with an instance of the API client
+with openziti_edge_management.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = role_attributes_api.RoleAttributesApi(api_client)
+    limit = 1 # int |  (optional)
+    offset = 1 # int |  (optional)
+    filter = "filter_example" # str |  (optional)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        # List role attributes in use by posture checks
+        api_response = api_instance.list_posture_check_role_attributes(limit=limit, offset=offset, filter=filter)
+        pprint(api_response)
+    except openziti_edge_management.ApiException as e:
+        print("Exception when calling RoleAttributesApi->list_posture_check_role_attributes: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**|  | [optional]
+ **offset** | **int**|  | [optional]
+ **filter** | **str**|  | [optional]
+
+### Return type
+
+[**ListRoleAttributesEnvelope**](ListRoleAttributesEnvelope.md)
+
+### Authorization
+
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of role attributes |  -  |
+**400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_service_role_attributes**
+> ListRoleAttributesEnvelope list_service_role_attributes()
+
+List role attributes in use by services
+
+Retrieves a list of role attributes in use by services; supports filtering, sorting, and pagination. Requires admin access. 
+
+### Example
+
+* Api Key Authentication (ztSession):
+* OAuth Authentication (oauth2):
+
+```python
+import time
+import openziti_edge_management
+from openziti_edge_management.api import role_attributes_api
+from openziti_edge_management.model.list_role_attributes_envelope import ListRoleAttributesEnvelope
+from openziti_edge_management.model.api_error_envelope import ApiErrorEnvelope
+from pprint import pprint
+# Defining the host is optional and defaults to https://demo.ziti.dev/edge/management/v1
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ztSession
+configuration.api_key['ztSession'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ztSession'] = 'Bearer'
+
+# Configure OAuth2 access token for authorization: oauth2
+configuration = openziti_edge_management.Configuration(
+    host = "https://demo.ziti.dev/edge/management/v1"
+)
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # Enter a context with an instance of the API client
 with openziti_edge_management.ApiClient(configuration) as api_client:
@@ -256,7 +370,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ztSession](../README.md#ztSession)
+[ztSession](../README.md#ztSession), [oauth2](../README.md#oauth2)
 
 ### HTTP request headers
 
@@ -270,7 +384,9 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A list of role attributes |  -  |
 **400** | The supplied request contains invalid fields or could not be parsed (json and non-json bodies). The error&#39;s code, message, and cause fields can be inspected for further information |  -  |
-**401** | The currently supplied session does not have the correct access rights to request this resource |  -  |
+**401** | The supplied session does not have the correct access rights to request this resource |  -  |
+**429** | The resource requested is rate limited and the rate limit has been exceeded |  -  |
+**503** | The request could not be completed due to the server being busy or in a temporarily bad state |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 REPO="openziti/edge-api"
-CONTAINER_TAG="v6.6.0"
+: "${OPENAPI_GENERATOR_TAG:=v6.6.0}"
 
 function _generate {
     local tag="$1"
@@ -11,12 +11,12 @@ function _generate {
         --cap-add ALL \
         --rm \
         --volume "${PWD}":/out:Z \
-        docker.io/openapitools/openapi-generator-cli:$CONTAINER_TAG generate \
+        "docker.io/openapitools/openapi-generator-cli:${OPENAPI_GENERATOR_TAG}" generate \
         --generator-name python-prior \
         --git-host 'github.com' \
         --git-repo-id 'openziti-edge-management-python' \
         --git-user-id 'openziti-test-kitchen' \
-        --input-spec "https://raw.githubusercontent.com/openziti/edge-api/tmp-patch-allowedSigners/management.yml" \
+        --input-spec "https://raw.githubusercontent.com/openziti/edge-api/$tag/management.yml" \
         --output '/out' \
         --package-name 'openziti_edge_management' \
         --additional-properties=packageVersion="${tag#v}" \

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **audience** | **str** |  | 
 **cert_pem** | **str, none_type** |  | 
 **claims_property** | **str** |  | 
+**client_id** | **str** |  | 
 **common_name** | **str** |  | 
 **enabled** | **bool** |  | 
 **external_auth_url** | **str** |  | 
@@ -22,6 +23,8 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **not_after** | **datetime** |  | 
 **not_before** | **datetime** |  | 
+**scopes** | **[str]** |  | 
+**target_token** | [**TargetToken**](TargetToken.md) |  | 
 **use_external_id** | **bool** |  | 
 **tags** | [**Tags**](Tags.md) |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
